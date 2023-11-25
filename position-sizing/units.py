@@ -19,11 +19,11 @@ formula:
 """
 from yahoo_fin.stock_info import get_live_price
 
-# first, find Market Dollar Volatility
-  # futures contract: the change in the asset for a 1$ change in the underlying commodity
-  # stock: price per share of the stock
+
+# futures contract: the change in the asset for a 1$ change in the underlying commodity
 VERSIONS = {0.1, 1.1}
 def dollar_volatility(version, asset, n):
+  """Calculate the market dollar volatility."""
   if version not in VERSIONS:
     raise ValueError("version must be one of %r." % VERSIONS)
     
@@ -36,17 +36,6 @@ def dollar_volatility(version, asset, n):
     return n * pps
     
 
-# second, find unit size
 def unit(dollar_volatility, account_size):
+  """Calculate volatility adjusted unit size."""
   return (0.01 * account_size) / dollar_volatility
-
-
-if __name__ == '__main__':
-  asset = input("Enter the asset symbol: ")
-  version = input("Enter 0.1 if the asset is a futures contract or 1.1 for common stock: ") 
-  account = input("Enter the account size ($): ")
-  
-  
-
-  
-  

@@ -1,21 +1,23 @@
 """https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf
 
-Calculate N - represents the underlying volatility of a particular market.
+Volatility - The Meaning of N
+The Turtles used a concept that Richard Dennis and Bill Eckhardt called N to
+represent the underlying volatility of a particular market.
 
 N is simply the 20-day exponential moving average of the True Range, which is now
 more commonly known as the ATR. Conceptually, N represents the average range in
 price movement that a particular market makes in a single day, accounting for opening
 gaps. N was measured in the same points as the underlying contract.
 
-To compute the True Range:
-  True Range = Maximum(H-L, H-PDC, PDC-L)
+To compute the daily true range:
+  TRUE RANGE = Maximum(H-L, H-PDC, PDC-L)
 
 where:
   H - Current High
   L - Current Low
   PDC - Previous Day's Close
 
-To compute N:
+To compute N use the following formula:
   N = (19 * PDN + TR) / 20
 
 where:
@@ -29,10 +31,10 @@ from yahoo_fin.stock_info import get_data
 
 
 def get_dataframe(ticker: str):
-  """Get dataframe and add true range."""
+  """Add true range column to dataframe."""
   df = get_data(ticker=ticker, interval='1d')
-  dataframe = df[['low', 'high', 'close']].tail(21)
-  # using high - low 
+  print(df)
+  dataframe = df[['low', 'high', 'close']].tail(20)
   dataframe['true_range'] = dataframe['high'] - dataframe['low']
   return dataframe
 
@@ -47,10 +49,10 @@ def calc_n(pdn, dataframe):
 
 
 if __name__ == '__main__':
-  print("Enter stock ticker: ")
-  inp = input()
+  inp = input("Enter stock ticker: ")
 
   dataframe = get_dataframe(inp)
   pdn = calc_pdn(dataframe)
   N = calc_n(pdn, dataframe)
+
   print("N: {!r}".format(N))

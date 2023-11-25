@@ -33,7 +33,6 @@ from yahoo_fin.stock_info import get_data
 def get_dataframe(ticker: str):
   """Add true range column to dataframe."""
   df = get_data(ticker=ticker, interval='1d')
-  print(df)
   dataframe = df[['low', 'high', 'close']].tail(20)
   dataframe['true_range'] = dataframe['high'] - dataframe['low']
   return dataframe
@@ -49,10 +48,3 @@ def calc_n(asset):
   
   true_range = dataframe['true_range'][-1]
   return (19 * pdn + true_range) / 20
-
-
-if __name__ == '__main__':
-  asset = input("Enter stock ticker: ")
-
-  N = calc_n(asset)
-  print("N: {!r}".format(N))

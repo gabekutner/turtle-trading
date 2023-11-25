@@ -42,17 +42,17 @@ def calc_pdn(dataframe):
   """Calculate the Previous Day's N."""
   return (sum(dataframe['true_range'][1:])) / 20
 
-def calc_n(pdn, dataframe):
+def calc_n(asset):
   """Calculate N."""
+  dataframe = get_dataframe(asset)
+  pdn = calc_pdn(dataframe)
+  
   true_range = dataframe['true_range'][-1]
   return (19 * pdn + true_range) / 20
 
 
 if __name__ == '__main__':
-  inp = input("Enter stock ticker: ")
+  asset = input("Enter stock ticker: ")
 
-  dataframe = get_dataframe(inp)
-  pdn = calc_pdn(dataframe)
-  N = calc_n(pdn, dataframe)
-
+  N = calc_n(asset)
   print("N: {!r}".format(N))

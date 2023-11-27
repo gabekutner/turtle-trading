@@ -1,2 +1,2 @@
-# backtests
- A collection of investing tools.
+# turtle-trading
+ A collection of turtle trading tools.

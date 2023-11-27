@@ -17,11 +17,23 @@ formula:
   or
   Unit = (1% of Account) / N * Dollars per Point
 """
+from yahoo_fin.stock_info import get_live_price
 
 
-
-
-if __name__ == '__main__':
-    # print("Enter the account size ($): ")
-    inp = input("Enter the account size ($): ")
-    print(inp)
+VERSIONS = {0.1, 1.1}
+def dollar_volatility(asset, n, version):
+    """Calculate the market dollar volatility."""
+    if version not in VERSIONS:
+      raise ValueError("version must be one of %r" % VERSIONS)
+    
+    if version == 0.1:
+      # futures
+      print("Futures feature not finished.")
+    
+    if version == 1.1:
+      pps = get_live_price(asset)
+      return n * pps
+    
+def unit(dollar_volatility, account_size: float):
+  """Calculate the volatility adjusted unit size."""
+  return (0.01 * account_size) / dollar_volatility

@@ -30,11 +30,26 @@ simple average of the True Range for the initial calculation.
 from yahoo_fin.stock_info import get_data
 
 
-def get_dataframe(ticker: str):
+def get_dataframe(ticker: str, version: float):
   """Add true range column to dataframe."""
   df = get_data(ticker=ticker, interval='1d')
-  dataframe = df[['low', 'high', 'close']].tail(20)
+  dataframe = df[['low', 'high', 'close']].tail(21)
+
+  dataframe['previous_close'] = dataframe['close'].shift(1)
   dataframe['true_range'] = dataframe['high'] - dataframe['low']
+
+  # print(dataframe)
+
+  if version == 1.1:
+    # dataframe = df[['low', 'high', 'close']].tail(21)
+    x = ""
+    # high_low = float(dataframe['high'] - dataframe['low'])
+    # high_pc = float(dataframe['high'] - dataframe['previous_close'])
+    # pc_low = float(dataframe['previous_close'] - dataframe['low'])
+    # # dataframe['true_range'] = max(dataframe['high'] - dataframe['low'], dataframe['high'] - dataframe['previous_close'], dataframe['previous_close'] - dataframe['low'])
+    # # print(dataframe['close'].shift(1) - dataframe['low'])
+    # dataframe['true_range'] = max(high_low, high_pc, pc_low)
+
   return dataframe
 
 def calc_pdn(dataframe):
@@ -43,8 +58,13 @@ def calc_pdn(dataframe):
 
 def calc_n(asset):
   """Calculate N."""
-  dataframe = get_dataframe(asset)
+  dataframe = get_dataframe(asset, version=1.1)
   pdn = calc_pdn(dataframe)
   
   true_range = dataframe['true_range'][-1]
   return (19 * pdn + true_range) / 20
+
+if __name__ == '__main__':
+  inp = input("Enter asset: ")
+
+  print(calc_n(inp))

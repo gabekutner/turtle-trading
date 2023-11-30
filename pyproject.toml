@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GABEKUTNER_turtle_trading"
+description = "Python package, a collection of investment tools used by the Turtle Traders."
+authors = [
+  { name="Gabe Kutner", email="gabekutner1@gmail.com" },
+]
+urls = {Homepage="https://github.com/gabekutner/turtle-trading/"}
+keywords = ["python", "investing", "trading", "turtle-trading", "turtle"]
+license = {text="MIT License"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+]
+dynamic = ["version", "readme"]
+requires-python = ">=3.8"
+dependencies = [
+    "yahoo-fin==0.8.9.1"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+readme = {file = "README.md"}
+version = {attr = "src.turtle_trading.__version__.__version__}

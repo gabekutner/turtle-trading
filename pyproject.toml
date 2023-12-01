@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "GABEKUTNER_turtle_trading"
+name = "turtle-trading"
 description = "Python package, a collection of investment tools used by the Turtle Traders."
 authors = [
   { name="Gabe Kutner", email="gabekutner1@gmail.com" },

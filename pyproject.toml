@@ -1,16 +1,17 @@
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 
 [project]
 name = "turtle-trading"
-description = "Python package, a collection of investment tools used by the Turtle Traders."
-authors = [
-  { name="Gabe Kutner", email="gabekutner1@gmail.com" },
-]
-urls = {Homepage="https://github.com/gabekutner/turtle-trading/"}
+version = "0.0.6"
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {file="LICENSE"}
+requires-python = ">=3.8"
+description = "A collection of investment tools used by the Turtle Traders."
+authors = [{ name="Gabe Kutner", email="gabekutner1@gmail.com" },]
 keywords = ["python", "investing", "trading", "turtle-trading", "turtle"]
-license = {text="MIT License"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
@@ -19,15 +20,13 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries",
 ]
-dynamic = ["version", "readme"]
-requires-python = ">=3.8"
-dependencies = [
-    "yahoo-fin==0.8.9.1"
-]
+
+
+[project.urls]
+Homepage = "https://github.com/gabekutner/turtle-trading/" 
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.setuptools.dynamic]
-readme = {file = "README.md"}
-version = {attr = "src.turtle_trading.__version__.__version__}
+[tool.poetry.dependencies]
+yahoo-fin = "^0.8.9.1"

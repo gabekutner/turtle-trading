@@ -63,8 +63,3 @@ def calc_n(asset):
   
   true_range = dataframe['true_range'][-1]
   return (19 * pdn + true_range) / 20
-
-if __name__ == '__main__':
-  inp = input("Enter asset: ")
-
-  print(calc_n(inp))

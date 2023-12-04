@@ -34,6 +34,7 @@ def dollar_volatility(asset, n, version):
       pps = get_live_price(asset)
       return n * pps
     
-def unit(dollar_volatility, account_size: float):
+def unit(account_size: float, n: float, asset: str):
   """Calculate the volatility adjusted unit size."""
+  dollar_volatility = dollar_volatility(asset=asset, n=n, version=1.1)
   return (0.01 * account_size) / dollar_volatility

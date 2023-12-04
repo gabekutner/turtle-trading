@@ -1,2 +1,2 @@
-from n import calc_n
-from units import unit
+from .n import calc_n
+import units

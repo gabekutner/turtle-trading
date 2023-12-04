@@ -11,5 +11,6 @@ __pycache__/
 env/
 dist/
 tests/venv/
+.gitattributes
 
 *.pyc

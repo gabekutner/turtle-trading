@@ -1,5 +1,6 @@
 # Class for determining volatility adjust position units.
 import math
+import pandas as pd
 from yahoo_fin.stock_info import get_data, get_live_price
 
 
@@ -29,7 +30,7 @@ class Unit(object):
   def __str__(self):
     return f"{self.asset}: {self.unit}"
 
-  def _get_dataframe(self):
+  def _get_dataframe(self) -> pd.DataFrame:
     """Add true range column to dataframe."""
     df = get_data(ticker=self.asset, interval='1d')
     dataframe = df[['low', 'high', 'close']].tail(21)

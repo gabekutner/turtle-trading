@@ -1,5 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OSX useful to ignore
+*.DS_Store
+
+
+# Distribution / packaging
 env/
-venv/
 dist/
 
 

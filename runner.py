@@ -1,8 +1,4 @@
-from src.turtle_trading.position_sizing import calc_n, units
+from src.turtle_trading.position_sizing import Unit
 
 if __name__ == "__main__":
-    n = calc_n("AAPL")
-    unit_size = units.unit(1000000.00, n, "AAPL")
-
-    print("N: {!r}".format(n))
-    print("Unit size: {!r}".format(unit_size))
+    unit = Unit(asset="AAPL", version=1.1, account_size=100_000)

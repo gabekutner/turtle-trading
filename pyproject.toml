@@ -1,11 +1,11 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "yahoo-fin >= 0.8.9.1", "pandas"]
 build-backend = "hatchling.build"
 
 
 [project]
 name = "turtle-trading"
-version = "0.0.9"
+version = "0.0.14"
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file="LICENSE"}
 requires-python = ">=3.8"
@@ -30,3 +30,7 @@ Homepage = "https://github.com/gabekutner/turtle-trading/"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.poetry.dependencies]
+yahoo-fin = "^0.8.9.1"
+pandas = "^2.1.3"

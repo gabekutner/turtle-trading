@@ -28,7 +28,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/gabekutner/turtle-trading/" 
 
-[tool.setuptools.packages.find] # tool.hatch?
+[tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.poetry.dependencies]

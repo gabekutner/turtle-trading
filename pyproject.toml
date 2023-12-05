@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "turtle-trading"
-dynamic = [version]
+dynamic = ["version"]
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {file="LICENSE"}
 requires-python = ">=3.8"

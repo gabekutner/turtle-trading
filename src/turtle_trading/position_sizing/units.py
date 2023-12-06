@@ -47,6 +47,8 @@ class Unit(object):
     self.__process()
     
   def __process(self):
+    self.true_range()
+    self.pdn()
     self.calculate_N()
     self.get_unit()
 
@@ -68,7 +70,7 @@ class Unit(object):
   To compute the daily true range:
     TRUE RANGE = Maximum(H-L, H-PDC, PDC-L)
   """
-  def _true_range(self) -> pd.DataFrame:
+  def true_range(self) -> pd.DataFrame:
     """Add true range column to dataframe."""
     df = get_data(ticker=self.asset, interval='1d')
 
@@ -88,9 +90,10 @@ class Unit(object):
   Since this formula requires a previous day's N value, you must start with a 20-day
   simple average of the True Rnage for the initial calculation.
   """
-  def _pdn(self) -> float:
+  def pdn(self) -> float:
     """Calculate the Previous Day's N."""
-    return (sum(self.dataframe['true_range'][1:])) / 20
+    self.pdn = (sum(self.dataframe['true_range'][1:])) / 20
+    return self.pdn
   
 
   """
@@ -99,11 +102,8 @@ class Unit(object):
   """
   def calculate_N(self) -> float:
     """Calculate N."""
-    dataframe = self._true_range()
-    pdn = self._pdn()
-    true_range = dataframe['true_range'][-1]
-
-    self.N = (19 * pdn + true_range) / 20
+    true_range = self.dataframe['true_range'][-1]
+    self.N = (19 * self.pdn + true_range) / 20
     return self.N
 
   

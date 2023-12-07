@@ -30,6 +30,7 @@ Homepage = "https://github.com/gabekutner/turtle-trading/"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["src/tests*"]
 
 [tool.poetry.dependencies]
 yahoo-fin = "^0.8.9.1"

@@ -34,6 +34,7 @@ import pandas as pd
 
 from yahoo_fin.stock_info import get_data, get_live_price
 
+pd.options.mode.chained_assignment = None  # default='warn'
 
 class Unit(object):
   """A Volatitility Adjusted Position Unit. 
@@ -72,14 +73,16 @@ class Unit(object):
   """
   def true_range(self) -> pd.DataFrame:
     """Add true range column to dataframe."""
-    df = get_data(ticker=self.asset, interval='1d')
+    dataframe = get_data(ticker=self.asset, interval='1d')
 
-    dataframe = df[['low', 'high', 'close']].tail(21)
+    dataframe = dataframe[['low', 'high', 'close']].tail(21).astype(object)
     dataframe['previous_close'] = dataframe['close'].shift(1)
     dataframe['true_range'] = 0
 
     for index, row in enumerate(dataframe.iterrows()):
       curr = dataframe.iloc[index]
+      if curr["previous_close"] is None:
+        curr['previous_close'] = 0
       dataframe.iloc[index, dataframe.columns.get_loc('true_range')] = max(curr['high'] - curr['low'], curr['high'] - curr['previous_close'], curr['previous_close'] - curr['low'])
 
     self.dataframe = dataframe

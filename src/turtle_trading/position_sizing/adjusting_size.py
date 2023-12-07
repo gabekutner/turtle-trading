@@ -36,7 +36,7 @@ time we went down 10% of the original account. So if a Turtle trading a $1,000,0
 account was ever was down 10%, or $100,000, we would then begin trading as if we
 had a $800,000 account until such time as we reached the yearly starting equity
 """
-def decrease_size(account_size: float, ) -> float:
+def decrease_size(account_size: float) -> float:
   """Return the new account size. This function is called if the account has suffered a 10% loss."""
   loss = 0.2 * account_size
   return account_size - loss

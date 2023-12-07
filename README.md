@@ -1,7 +1,7 @@
 # turtle-trading
-A Python Package of a collection Turtle Trading investing tools. All code is based on the ideas presented in [_The Original Turtle Trading Rules_](https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf).
+A Python Package of a collection Turtle Trading investing tools. All code is based on the ideas presented in [_The Original Turtle Trading Rules_](https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf). Page numbers are referenced in the code.
 
-The package, currently, contains only one working beta module: position_sizing.
+The package, currently, contains only one module: position_sizing.
 
 Download using pip:
 
@@ -9,19 +9,36 @@ Download using pip:
 pip install turtle-trading
 ```
 
-Examples:
+Examples using the `position_sizing` module:
 
 ```python
-from turtle_trading.position_sizing import units, adjusting_size
+from turtle_trading.position_sizing import units, adjusting_size, risk_management
+
+# your account value
+account = 1_000_000.00
 
 """ Create a Unit instance. """
-unit = units.Unit(asset="AAPL", account_size=1_000_000)
+unit = units.Unit(asset="AAPL", account_size=account)
 
-""" Determine how many shares are in one unit. """
-print(unit) # returns.. > AAPL: 20
 
-""" See N, learn about this on page 12. """
+""" See N: the underlying volatility of a particular market 
+Pg. 12
+"""
 print(unit.N) # returns.. > 2.19987
+
+
+""" See Volatility Adjusted Position Units
+Pg. 18
+"""
+print(unit.get_unit) # returns.. > 20
+# or 
+print(unit.unit) # returns.. > AAPL: 20
+
+
+""" Adjusting Trading Size
+pg. 21
+"""
+print(adjusting_size.decrease_size(account)) # returns.. > 800_000
 ```
 
 More will be published soon.

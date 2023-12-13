@@ -1,4 +1,6 @@
 # turtle-trading
+<br>
+
 A Python Package of a collection Turtle Trading investing tools. All code is based on the ideas presented in [_The Original Turtle Trading Rules_](https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf). Page numbers are referenced in the code.
 
 The package, currently, contains only one module: position_sizing.

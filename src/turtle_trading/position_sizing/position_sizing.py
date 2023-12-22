@@ -79,6 +79,8 @@ from yahoo_fin.stock_info import get_data
 """ ignore Pandas Future Warning """
 pd.options.mode.chained_assignment = None  # default='warn'
 
+MODES = ["reg", "df"]
+
 
 class SingleMarketsException(Exception):
   """ Single Markets - A maximum of 4 Units per market. """
@@ -96,45 +98,59 @@ class SingleDirectionException(Exception):
   """ Single Direction - A maximum of 12 Units in one direction, long or short.  """
 
 
-def getn(asset: str):
+def getn(asset: str, dataframe: pd.DataFrame = None):
   """Get N. 
+
   Args:
     asset: An asset's symbol.
+    dataframe: A pandas dataframe, if no query is required.
   """
-  return N(asset)
+  return N(asset=asset, dataframe=dataframe)
+
 
 def getunit(asset: str, N: float, account_size: float):
   """Get Unit Size.
+
   Args:
     asset: An asset's symbol.
     N: An asset's underlying volatility.
   """
-  return Unit(asset, N, account_size)
+  return Unit(asset=asset, N=N, account_size=account_size)
 
 
 class N:
   """This class represents an asset's underlying volatility.
+
   Args:
     asset: An asset's symbol.
+    dataframe: A pandas dataframe, if no query is required.
   """
-  def __init__(self, asset: str):
-    self.DATAFRAME = self._dataframe(asset)
+  def __init__(self, asset: str, dataframe: pd.DataFrame = None):
+    self.DATAFRAME = self._dataframe(asset, dataframe)
     self.TRUE_RANGE = self.true_range(self.DATAFRAME)
     self.PDN = self.pdn(self.TRUE_RANGE)
     self.N = self.n(self.PDN, self.TRUE_RANGE)
 
-  def _dataframe(self, asset: str) -> pd.DataFrame:
+  def _dataframe(self, asset: str, dataframe: pd.DataFrame = None) -> pd.DataFrame:
     """Get dataframe. 
+
     Args:
       asset: An asset's symbol.
+      dataframe: A pandas dataframe, if no query is required.
     """
-    dataframe = get_data(ticker=asset, interval="1d")[["low", "high", "close"]].tail(21).astype(object)
+    if dataframe is None:
+      dataframe = get_data(ticker=asset, interval="1d")[["low", "high", "close"]].tail(21).astype(object)
+    
+    else:
+      dataframe = dataframe[["low", "high", "close"]].astype(object)
+
     dataframe["previous_close"] = dataframe["close"].shift(1)
     dataframe["true_range"] = 0
     return dataframe
 
   def true_range(self, dataframe: pd.DataFrame) -> pd.Series:
     """Get the true range column.
+
     Args:
       dataframe: The asset's dataframe.
     """
@@ -150,6 +166,7 @@ class N:
   
   def pdn(self, true_range: pd.Series) -> float:
     """Get the previous day's N. 
+
     Args:
       true_range: The true range column. 
     """

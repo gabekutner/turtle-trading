@@ -32,16 +32,26 @@ Second Unit         28.30 + 1/2 (1.20) or 28.90
 Third Unit          28.90 + 1/2 (1.20) or 29.50
 Fourth Unit         29.50 + 1/2 (1.20) or 30.10
 """
+import sys
+from pathlib import Path
 
+path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
+sys.path.insert(0, path)
+from position_sizing.position_sizing import SingleDirectionException
 
 def add_units(N: float, breakout: float, units: int = 4):
-  """Returns the next four units to add.
+  """Returns the next four units.
+
+  COMMENT: The maximum 
   
   Args:
     N: The 'N' at the breakout price.
     breakout: The breakout price.
     units: Optional, how many units to add. 
   """
+  if units > 4:
+    raise SingleDirectionException
+
   _units = [breakout]
   for i in range(units-1):
     to_be = _units[i] + 0.5 * (N)

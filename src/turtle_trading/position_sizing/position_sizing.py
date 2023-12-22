@@ -173,7 +173,8 @@ class N:
     return sum(true_range[1:]) / 20
   
   def n(self, pdn: float, true_range: pd.Series) -> float:
-    """Get N. 
+    """Get N.
+    
     Args:
       pdn: The previous day's N.
       true_range: The true range column. 
@@ -183,6 +184,7 @@ class N:
 
 class Unit:
   """This class represents an asset's units size.
+
   Args:
     asset: An asset's symbol.
     N: An asset's underlying volatility.
@@ -202,6 +204,7 @@ class Unit:
   
   def unit_size(self, dollar_volatility, account_size):
     """Get the volatility adjusted unit size.
+    
     Args:
       dollar_volatility: The market dollar volatility of an asset.
     """

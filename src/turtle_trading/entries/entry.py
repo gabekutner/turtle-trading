@@ -62,7 +62,7 @@ sys.path.insert(0, path)
 from position_sizing.position_sizing import getn
 
 
-def getsignal(price: float, dataframe: pd.DataFrame, system: int):
+def getsignal(price: float, dataframe: pd.DataFrame, system: int) -> bool:
   """Get an entry signal.
 
   Args:
@@ -70,7 +70,12 @@ def getsignal(price: float, dataframe: pd.DataFrame, system: int):
     dataframe: The asset's get_data() dataframe.
     system: Which system to use, 1 or 2.
   """
+  if 1 < system > 2:
+    raise Exception("Not an excepted system. Choose 1 or 2.")
+  
+  # reverse the dataframe
   dataframe = dataframe.loc[::-1]
+
   if system == 1:
     return system_one(price=price, dataframe=dataframe)
   elif system == 2:
@@ -157,7 +162,7 @@ def last_breakout(dataframe: pd.DataFrame, stand_devs: float = 2.0, days: int = 
       if row[1]["close"] - breakout_price <= -(stand_devs * N.N):
         return False
   
-  # if false not returned, position is winning
+  # if False not returned, position is winning
   return True
 
 

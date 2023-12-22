@@ -57,8 +57,6 @@ import sys
 import pandas as pd
 from pathlib import Path
 
-from yahoo_fin.stock_info import get_data
-
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 from position_sizing.position_sizing import getn
@@ -227,15 +225,3 @@ def system_two(price: float, dataframe: pd.DataFrame) -> bool or None:
   _breakout = breakout(price=price, dataframe=dataframe, days=55) # is the current price is a 55-day breakout
   if isinstance(_breakout, bool): # if a breakout...
     return _breakout
-
-
-# if __name__ == "__main__":
-  
-#   price = 250.00
-#   dataframe = get_data("TSLA", interval="1d").loc[::-1]
-
-#   x = breakout(price=price, dataframe=dataframe, days=20)
-#   s = system_two(price=price, dataframe=dataframe)
-
-#   previous_breakout = last_breakout(dataframe=dataframe, stand_devs=2)
-#   sx = system_one(price=price, dataframe=dataframe)

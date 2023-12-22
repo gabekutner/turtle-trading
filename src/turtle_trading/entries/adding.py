@@ -39,7 +39,7 @@ path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 from position_sizing.position_sizing import SingleDirectionException
 
-def add_units(N: float, breakout: float, units: int = 4):
+def addunits(N: float, breakout: float, units: int = 4):
   """Returns the next four units.
 
   COMMENT: The maximum 

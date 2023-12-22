@@ -1,2 +1,2 @@
 from .entry import getsignal
-from .adding import add_units
+from .adding import addunits

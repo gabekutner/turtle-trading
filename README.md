@@ -11,7 +11,7 @@ Download using pip:
 pip install turtle-trading
 ```
 
-Examples using the `position_sizing` module:
+Examples using the `position_sizing` and `entries` modules:
 
 ```python
 from turtle_trading.position_sizing import getn, getunit

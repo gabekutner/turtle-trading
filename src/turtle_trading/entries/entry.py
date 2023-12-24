@@ -57,6 +57,7 @@ import sys
 import pandas as pd
 from pathlib import Path
 
+""" Avoid import errors while importing 'getn' function """
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 from position_sizing.position_sizing import getn
@@ -65,13 +66,17 @@ from position_sizing.position_sizing import getn
 def getsignal(price: float, dataframe: pd.DataFrame, system: int) -> bool:
   """Get an entry signal.
 
+  COMMENT(s): 
+    Consider removing dataframe arg and doing that inside function.
+    Move from function to class?
+
   Args:
     price: The asset's current price.
     dataframe: The asset's get_data() dataframe.
     system: Which system to use, 1 or 2.
   """
-  if 1 < system > 2:
-    raise Exception("Not an excepted system. Choose 1 or 2.")
+  if system not in (1, 2):
+    raise AssertionError("System must be of of 1 or 2.")
   
   # reverse the dataframe
   dataframe = dataframe.loc[::-1]
@@ -108,12 +113,12 @@ def breakout(price: float, dataframe: pd.DataFrame, days: int) -> bool:
   elif all(_ >= price for _ in dataframe.head(days+1)["low"].tolist()): # if all the lows are higher than the price
     return False # short
 
-  else:
-    return None # no breakout
+  return None # no breakout
   
 
 def last_breakout(dataframe: pd.DataFrame, stand_devs: float = 2.0, days: int = 20, skip: int = 1):
-  """
+  """Get the last breakout and determine if it was a losing or winning position.
+
   System 1 breakout entry signals would be ignored if the last breakout would have
   resulted in a winning trade. NOTE: For the purposes of this test, the last breakout was
   considered the last breakout in the particular commodity irrespective of whether or not 
@@ -154,15 +159,15 @@ def last_breakout(dataframe: pd.DataFrame, stand_devs: float = 2.0, days: int = 
     # if the difference between the close and breakout price is greater than num * n, return False
     if index == 10: break
 
-    if direction: # if a long position
-      if row[1]["close"] - breakout_price >= stand_devs * N.N:
+    if direction: # if a long position, True
+      if row[1]["close"] - breakout_price >= stand_devs * N:
         return False
 
-    if not direction: # if a short position
-      if row[1]["close"] - breakout_price <= -(stand_devs * N.N):
+    if not direction: # if a short position, False
+      if row[1]["close"] - breakout_price <= -(stand_devs * N):
         return False
   
-  # if False not returned, position is winning
+  # if False not returned, position is winning.. return True
   return True
 
 

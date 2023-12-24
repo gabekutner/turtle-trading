@@ -79,8 +79,6 @@ from yahoo_fin.stock_info import get_data
 """ ignore Pandas Future Warning """
 pd.options.mode.chained_assignment = None  # default='warn'
 
-MODES = ["reg", "df"]
-
 
 class SingleMarketsException(Exception):
   """ Single Markets - A maximum of 4 Units per market. """
@@ -99,23 +97,24 @@ class SingleDirectionException(Exception):
 
 
 def getn(asset: str, dataframe: pd.DataFrame = None):
-  """Get N. 
+  """Calculate N.
 
   Args:
     asset: An asset's symbol.
     dataframe: A pandas dataframe, if no query is required.
   """
-  return N(asset=asset, dataframe=dataframe)
+  return N(asset=asset, dataframe=dataframe).n
 
 
-def getunit(asset: str, N: float, account_size: float):
+def getunit(asset: str, n: float, account_size: float):
   """Get Unit Size.
 
   Args:
     asset: An asset's symbol.
-    N: An asset's underlying volatility.
+    n: An asset's underlying volatility.
   """
-  return Unit(asset=asset, N=N, account_size=account_size)
+  return Unit(asset=asset, n=n, account_size=account_size)
+
 
 
 class N:
@@ -126,13 +125,14 @@ class N:
     dataframe: A pandas dataframe, if no query is required.
   """
   def __init__(self, asset: str, dataframe: pd.DataFrame = None):
-    self.DATAFRAME = self._dataframe(asset, dataframe)
-    self.TRUE_RANGE = self.true_range(self.DATAFRAME)
-    self.PDN = self.pdn(self.TRUE_RANGE)
-    self.N = self.n(self.PDN, self.TRUE_RANGE)
+    self.dataframe = self._dataframe(asset, dataframe)
+    self.true_range = self._true_range(self.dataframe)
+    self.pdn = self._pdn(self.true_range)
+    self.n = self._n(self.pdn, self.true_range)
+
 
   def _dataframe(self, asset: str, dataframe: pd.DataFrame = None) -> pd.DataFrame:
-    """Get dataframe. 
+    """Get the asset's pandas dataframe. 
 
     Args:
       asset: An asset's symbol.
@@ -148,8 +148,9 @@ class N:
     dataframe["true_range"] = 0
     return dataframe
 
-  def true_range(self, dataframe: pd.DataFrame) -> pd.Series:
-    """Get the true range column.
+
+  def _true_range(self, dataframe: pd.DataFrame) -> pd.Series:
+    """Create and return the true range column.
 
     Args:
       dataframe: The asset's dataframe.
@@ -164,7 +165,8 @@ class N:
 
     return dataframe["true_range"]
   
-  def pdn(self, true_range: pd.Series) -> float:
+
+  def _pdn(self, true_range: pd.Series) -> float:
     """Get the previous day's N. 
 
     Args:
@@ -172,14 +174,16 @@ class N:
     """
     return sum(true_range[1:]) / 20
   
-  def n(self, pdn: float, true_range: pd.Series) -> float:
-    """Get N.
+
+  def _n(self, pdn: float, true_range: pd.Series) -> float:
+    """Get 'N'.
     
     Args:
-      pdn: The previous day's N.
+      pdn: The previous day's 'N'.
       true_range: The true range column. 
     """
     return (19 * pdn + true_range[-1]) / 20
+  
   
 
 class Unit:
@@ -189,20 +193,26 @@ class Unit:
     asset: An asset's symbol.
     N: An asset's underlying volatility.
   """
-  def __init__(self, asset: str, N: float, account_size: float):
-    self.DOLLAR_VOLATILITY = self.dollar_volatility(asset, N)
-    self.UNIT = self.unit_size(self.DOLLAR_VOLATILITY, account_size)
+  def __init__(self, asset: str, n: float, account_size: float):
+    self.dollar_volatility = self._dollar_volatility(asset, n)
+    self.unit = self._unit_size(self.dollar_volatility, account_size)
 
-  def dollar_volatility(self, asset: str, N: float) -> float:
+
+  def _dollar_volatility(self, asset: str, n: float) -> float:
     """Get the market dollar volatility of an asset.
+
     Args:
       asset: An asset's symbol.
     """
+    # get the live price
     dataframe = get_data(ticker=asset, end_date=pd.Timestamp.today() + pd.DateOffset(10))
     pps = dataframe.close[-1]
-    return N * pps
+
+    # multiply N and the live price
+    return n * pps
   
-  def unit_size(self, dollar_volatility, account_size):
+
+  def _unit_size(self, dollar_volatility, account_size):
     """Get the volatility adjusted unit size.
     
     Args:

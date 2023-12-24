@@ -13,6 +13,8 @@ pip install turtle-trading
 
 Examples using the `position_sizing` and `entries` modules:
 
+__NOTE__: The `exits` and `stops` modules are not yet finished.
+
 ```python
 from turtle_trading.position_sizing import getn, getunit
 from turtle_trading.entries import getsignal, addunits
@@ -23,11 +25,11 @@ account = 1_000_000.00
 # Chapter 3: Position Sizing
 """ Get 'N' of an asset. """
 asset = getn(asset="AAPL")
-print(asset.N) # e.g. returns.. > 2.19987
+print(asset) # e.g. returns.. > 2.19987
 
 """ Find the Unit Size of an asset. """
-unit = getunit(asset="AAPL", N=asset.N, account_size=account)
-print(unit.UNIT) # e.g. returns.. > 2334
+unit = getunit(asset="AAPL", N=asset, account_size=account)
+print(unit.unit) # e.g. returns.. > 2334
 
 # Chapter 4: Entries
 """ Get an Entry Signal - True for long entry, False for short entry, None for no entry. """

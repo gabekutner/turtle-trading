@@ -53,14 +53,14 @@ initiate a short position.
 All breakouts for System 2 would be taken whether the previous breakout had been a
 winner or not.
 """
-import sys
+# import sys
 import pandas as pd
-from pathlib import Path
+# from pathlib import Path
 
 """ Avoid import errors while importing 'getn' function """
-path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
-sys.path.insert(0, path)
-from position_sizing.position_sizing import getn
+# path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
+# sys.path.insert(0, path)
+from turtle_trading.position_sizing import getn
 
 
 def getsignal(price: float, dataframe: pd.DataFrame, system: int) -> bool:

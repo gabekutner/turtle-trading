@@ -2,6 +2,8 @@
 # -*- coding: UTF8 -*-
 """https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf
 
+Chapter 4, Page 23
+
 Adding Units
 Turtles entered single Unit long positions at the breakouts and added to those
 positions at 1/2 N intervals following their initial entry. This 1/2 N interval was based on 

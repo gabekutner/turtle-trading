@@ -2,6 +2,8 @@
 # -*- coding: UTF8 -*-
 """https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf
 
+Chapter 3
+
 Volatility - The Meaning of N
 The Turtles used a concept that Richard Dennis and Bill Eckhardt called N to 
 represent the underlying volatility of a particular market.
@@ -115,7 +117,7 @@ def getunit(asset: str, n: float, account_size: float):
     n: An asset's underlying volatility.
     account_size: The account value.
   """
-  return Unit(asset=asset, n=n, account_size=account_size)
+  return Unit(asset=asset, n=n, account_size=account_size).unit
 
 
 class N:

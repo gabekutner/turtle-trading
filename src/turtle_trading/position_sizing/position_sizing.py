@@ -79,7 +79,6 @@ from types import NoneType
 from yahoo_fin.stock_info import get_data
 
 """ ignore Pandas Future Warning """
-# pd.options.mode.chained_assignment = None  # default='warn'
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
@@ -168,7 +167,6 @@ class N:
 
     return dataframe["true_range"]
   
-
   def get_pdn(self, true_range: pd.Series) -> float:
     """Get the previous day's 'N'. 
 
@@ -177,7 +175,6 @@ class N:
     """
     return sum(true_range[1:]) / 20
   
-
   def get_n(self, pdn: float, true_range: pd.Series) -> float:
     """Get 'N'.
     
@@ -196,10 +193,10 @@ class Unit:
     N: An asset's underlying volatility.
   """
   def __init__(self, asset: str, n: float, account_size: float):
-    self.dollar_volatility = self._dollar_volatility(asset, n)
-    self.unit = self._unit_size(self.dollar_volatility, account_size)
+    self.dollar_volatility = self.get_dollar_volatility(asset, n)
+    self.unit = self.get_unit_size(self.dollar_volatility, account_size)
 
-  def _dollar_volatility(self, asset: str, n: float) -> float:
+  def get_dollar_volatility(self, asset: str, n: float) -> float:
     """Get the market dollar volatility of an asset.
 
     Args:
@@ -211,7 +208,7 @@ class Unit:
     pps = dataframe.close[-1]
     return n * pps
   
-  def _unit_size(self, dollar_volatility: float, account_size: float):
+  def get_unit_size(self, dollar_volatility: float, account_size: float):
     """Get the volatility adjusted unit size.
     
     Args:

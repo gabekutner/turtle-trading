@@ -2,7 +2,7 @@
 # -*- coding: UTF8 -*-
 """https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf
 
-Chapter 4, Page 22
+Chapter 4, Page 23
 
 System 1 - A shorter-term system based on a 20-day breakout.
 

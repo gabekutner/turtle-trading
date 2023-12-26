@@ -34,10 +34,10 @@ Second Unit         28.30 + 1/2 (1.20) or 28.90
 Third Unit          28.90 + 1/2 (1.20) or 29.50
 Fourth Unit         29.50 + 1/2 (1.20) or 30.10
 """
-import warnings
+from turtle_trading._config import warning_assignment, warning_mode, warning_type
 
 
-def addunits(n: float, breakout: float, units: int = 4):
+def addunits(n: float, breakout: float, units: int = 4, warning: warning_type = warning_mode):
   """Returns the next four units.
 
   COMMENT: The maximum units allowed by the Turtle Trading system on one position is 4.
@@ -46,13 +46,12 @@ def addunits(n: float, breakout: float, units: int = 4):
     n: An asset's underlying volatility.
     breakout: The breakout price.
     units: Optional, how many units to add. 
+    warning: Optional, ignore the warning or don't.
   """
-  if units > 4: 
-    warnings.warn("The maximum units allowed by the Turtle Trading system on one position is 4.", 
-                  warnings.WarningMessage)
+  if units > 4: warning_assignment(warning, f"The maximum units allowed by the Turtle Trading system on one position is 4.")
 
   _units = [breakout]
   for i in range(units-1):
-    _units.append(_units[i] + 0.5 * (n))
+    _units.append(round((_units[i] + 0.5 * n), 4))
 
   return _units

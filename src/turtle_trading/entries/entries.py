@@ -76,6 +76,49 @@ def getsignal(asset: str, price: float, system: int):
   """
   return Signal(asset=asset, price=price, system=system).result
 
+def get_breakout_prices(asset: str, day: int = 20) -> tuple[float, float]:
+  """Find the next breakout price for short and long positions.
+
+  Args:
+    asset: An asset's symbol.
+    day: 20-day or 55-day breakout.
+  """
+  return Breakout(asset, day).result
+
+
+class Breakout:
+  """This class represents the process of finding the next breakout prices.
+
+  Args:
+    asset: An asset's symbol.
+    day: 20-day or 55-day breakout.
+  """
+  def __init__(self, asset: str, day: int = 20) -> None:
+    dataframe = self.get_dataframe(asset, day)
+    self.result = self.find_extrema(dataframe)
+
+  def get_dataframe(self, asset: str, day: int = 20):
+    """Get the dataframe, reversed, with the `day` being the .head() value.
+
+    Args:
+      asset: An asset's symbol.
+      day: 20-day or 55-day breakout. 
+    """
+    dataframe = get_data(asset, interval="1d")
+    dataframe = dataframe.loc[::-1] # reverse
+    return dataframe.head(day)[["high", "low"]]
+
+  def find_extrema(self, dataframe: pd.DataFrame) -> tuple[float, float]:
+    """Find the min and max of the dataframe.
+    
+    Args:
+      dataframe: An asset's pandas dataframe.
+    """
+    maximum = dataframe["high"].max()
+    minimum = dataframe["low"].min()
+    return (maximum, minimum)
+
+
 
 class Signal:
   """This class represents the process of finding an entry signal, if there is one.

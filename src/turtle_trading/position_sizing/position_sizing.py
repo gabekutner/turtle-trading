@@ -182,7 +182,7 @@ class N:
       pdn: The previous day's 'N'.
       true_range: The true range column. 
     """
-    return (19 * pdn + true_range[-1]) / 20
+    return round(((19 * pdn + true_range[-1]) / 20), 4)
 
 
 class Unit:

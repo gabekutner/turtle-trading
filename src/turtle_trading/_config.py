@@ -2,7 +2,6 @@
 # -*- coding: UTF8 -*-
 """ The _config module holds package-wide configurables. """
 import warnings
-from types import NoneType
 from typing import Union, Literal
 
 # Warning Class
@@ -15,7 +14,7 @@ warning_type = Union[Literal["warn"], Literal[None]]
 warnings.simplefilter(action="always", category=UnitsWarning)
 
 def warning_assignment(warning_mode: warning_type = warning_mode, message: str = f"MarketsException"):
-  if isinstance(warning_mode, NoneType):
+  if isinstance(warning_mode, type(None)):
     return warnings.simplefilter(action="ignore", category=UnitsWarning)
 
   return warnings.warn(message, UnitsWarning)

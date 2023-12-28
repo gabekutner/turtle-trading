@@ -74,7 +74,6 @@ at the same time.
 """
 import warnings
 import pandas as pd
-from types import NoneType
 
 from yahoo_fin.stock_info import get_data
 
@@ -157,7 +156,7 @@ class N:
     """
     for index, row in enumerate(dataframe.iterrows()):
       # Set the last 'previous_close' to 0, otherwise will raise NoneType error
-      if isinstance(row[1]["previous_close"], NoneType):
+      if isinstance(row[1]["previous_close"], type(None)):
         row[1]["previous_close"] = 0
 
       maximum = max(

@@ -58,12 +58,12 @@ winner or not.
 import pandas as pd
 
 from turtle_trading.position_sizing import getn
-from yahoo_fin.stock_info import get_data
+from turtle_trading._data import DataFrameClass
 
 SYSTEM = {1: 20, 2: 55}
 
 
-def getsignal(asset: str, price: float, system: int):
+def getsignal(asset: str, price: float, system: int, *args, **kwargs):
   """Get an entry signal, if there is one.
 
   Args:
@@ -74,38 +74,37 @@ def getsignal(asset: str, price: float, system: int):
   Returns:
     True if a long breakout, False if a short breakout, None if there's no breakout.
   """
-  return Signal(asset=asset, price=price, system=system).result
+  return Signal(asset, price, system, *args, **kwargs).result
 
-def get_breakout_prices(asset: str, day: int = 20) -> tuple[float, float]:
+def getbreakouts(asset: str, day: int = 20, *args, **kwargs) -> tuple[float, float]:
   """Find the next breakout price for short and long positions.
 
   Args:
     asset: An asset's symbol.
     day: 20-day or 55-day breakout.
   """
-  return Breakout(asset, day).result
+  return Breakout(asset, day, *args, **kwargs).result
+  
 
-
-class Breakout:
+class Breakout(DataFrameClass):
   """This class represents the process of finding the next breakout prices.
 
   Args:
     asset: An asset's symbol.
     day: 20-day or 55-day breakout.
   """
-  def __init__(self, asset: str, day: int = 20) -> None:
-    dataframe = self.get_dataframe(asset, day)
+  def __init__(self, asset: str, day: int = 20, *args, **kwargs) -> None:
+    super().__init__(asset, *args, **kwargs)
+    dataframe = self.init_dataframe(day)
     self.result = self.find_extrema(dataframe)
 
-  def get_dataframe(self, asset: str, day: int = 20):
+  def init_dataframe (self, day: int = 20) -> pd.DataFrame:
     """Get the dataframe, reversed, with the `day` being the .head() value.
 
     Args:
-      asset: An asset's symbol.
       day: 20-day or 55-day breakout. 
     """
-    dataframe = get_data(asset, interval="1d")
-    dataframe = dataframe.loc[::-1] # reverse
+    dataframe = self.get_dataframe(interval="1d", reverse=True)
     return dataframe.head(day)[["high", "low"]]
 
   def find_extrema(self, dataframe: pd.DataFrame) -> tuple[float, float]:
@@ -114,37 +113,28 @@ class Breakout:
     Args:
       dataframe: An asset's pandas dataframe.
     """
-    maximum = dataframe["high"].max()
-    minimum = dataframe["low"].min()
+    maximum, minimum = dataframe["high"].max(), dataframe["low"].min()
     return (maximum, minimum)
 
 
 
-class Signal:
+class Signal(DataFrameClass):
   """This class represents the process of finding an entry signal, if there is one.
   
   Args:
     asset: An asset's symbol.
     system: System 1 or System 2.
   """
-  def __init__(self, asset: str, price: float, system: int) -> None:
+  def __init__(self, asset: str, price: float, system: int, *args, **kwargs) -> None:
+
     if system not in (1, 2):
       raise AssertionError("System's gotta be 1 or 2.")
-
-    dataframe = self.get_dataframe(asset=asset)
+    
+    super().__init__(asset, *args, **kwargs)
+    dataframe = self.get_dataframe(interval="1d", reverse=True)
     self.result = self.get_system(system=system, price=price, dataframe=dataframe)
 
-  def get_dataframe(self, asset: str) -> pd.DataFrame:
-    """Get the asset's pandas dataframe, reversed.
-    
-    Args:
-      asset: An asset's symbol.
-    """
-    dataframe = get_data(asset, interval="1d")
-    dataframe = dataframe.loc[::-1] # reverse
-    return dataframe
-
-  def get_breakout(self, price: float, dataframe: pd.DataFrame, days: int) -> bool or None:
+  def get_breakout(self, price: float, dataframe: pd.DataFrame, days: int) -> bool | None:
     """Determine if the price is a breakout price.
     
     Args:
@@ -155,11 +145,19 @@ class Signal:
     Returns:
       True if a long breakout, False if a short breakout, None if there's no breakout.
     """
-    if all(_ <= price for _ in dataframe.head(days+1)["high"].tolist()): return True
-  
-    elif all(_ >= price for _ in dataframe.head(days+1)["low"].tolist()): return False 
 
-    else: return None
+    # inherit from Breakout
+    # find breakout prices for the day -> @lru_cache it
+    # see if price goes above or below that ...
+
+    if all(_ <= price for _ in dataframe.head(days+1)["high"].tolist()): 
+      return True
+    
+    elif all(_ >= price for _ in dataframe.head(days+1)["low"].tolist()): 
+      return False 
+
+    else: 
+      return None
 
   def get_last_breakout(self, dataframe: pd.DataFrame, stand_devs: float = 2.0, days: int = 20, skip: int = 1) -> bool:
     """Get the result of the last breakout, winning or losing.
@@ -175,14 +173,15 @@ class Signal:
       True if winning position, False if losing position.
     """
     for index, row in enumerate(dataframe.iterrows()):
-      last_twenty = dataframe.iloc[index+1: index+days+1]
-      _breakout = self.get_breakout(price=row[1]["close"], dataframe=last_twenty, days=20)
+      last_twenty = dataframe.iloc[index+1: index+1+days] # exclude today, +1
+
+      _breakout = self.get_breakout(price=row[1]["close"], dataframe=last_twenty, days=20) # is index a breakout?
   
       if isinstance(_breakout, bool) and index > skip: # if a breakout
         loc, direction, last_twenty_dataframe = index, True if _breakout is True else False, last_twenty
         break
 
-    N = getn(asset="", dataframe=last_twenty_dataframe)
+    N = getn(asset="", dataframe=last_twenty_dataframe) # n of the last breakout price
     breakout_price = dataframe.iloc[loc]["close"] # the last breakout price
 
     for index, row in enumerate(dataframe.iloc[:loc+1].iloc[::-1].iterrows()):  
@@ -198,7 +197,7 @@ class Signal:
     
     return True # if not False, return True
 
-  def get_system(self, system: int, price: float, dataframe: pd.DataFrame) -> bool or None:
+  def get_system(self, system: int, price: float, dataframe: pd.DataFrame) -> bool | None:
     """Get the system to use and entry results using that system.
     
     Args:

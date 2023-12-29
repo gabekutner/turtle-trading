@@ -75,7 +75,7 @@ at the same time.
 import warnings
 import pandas as pd
 
-from yahoo_fin.stock_info import get_data
+from turtle_trading._data import DataFrameClass
 
 """ ignore Pandas Future Warning """
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -97,17 +97,17 @@ class SingleDirectionException(Exception):
   """ Single Direction - A maximum of 12 Units in one direction, long or short.  """
 
 
-def getn(asset: str, dataframe: pd.DataFrame = None):
+def getn(asset: str, dataframe: pd.DataFrame = None, *args, **kwargs):
   """Calculate N.
 
   Args:
     asset: An asset's symbol.
     dataframe: A pandas dataframe, if no query is required.
   """
-  return N(asset=asset, dataframe=dataframe).n
+  return N(asset=asset, dataframe=dataframe, *args, **kwargs).n
 
 
-def getunit(asset: str, n: float, account_size: float):
+def getunit(asset: str, n: float, account_size: float, *args, **kwargs):
   """Get Unit Size.
 
   Args:
@@ -115,32 +115,41 @@ def getunit(asset: str, n: float, account_size: float):
     n: An asset's underlying volatility.
     account_size: The account value.
   """
-  return Unit(asset=asset, n=n, account_size=account_size).unit
+  return Unit(asset=asset, n=n, account_size=account_size, *args, **kwargs).unit
 
 
-class N:
+def adjust_account_size(account_size: float) -> float:
+  """ The Turtles were instructed to decrease the size of the notional account by 20% each
+  time we went down 10% of the original account. 
+
+  Args:
+    account_size: The account size. 
+  """
+  return account_size - (account_size * .2)
+
+
+class N(DataFrameClass):
   """This class represents the process of calculating 'N', the underlying volatility of an asset.
 
   Args:
     asset: An asset's symbol.
     dataframe: A pandas dataframe, if no query is required.
   """
-  def __init__(self, asset: str, dataframe: pd.DataFrame = None) -> None:
-    self.dataframe = self.get_dataframe(asset, dataframe)
+  def __init__(self, asset: str, dataframe: pd.DataFrame = None, *args, **kwargs) -> None:
+    super().__init__(asset, *args, **kwargs)
+    self.dataframe = self.init_dataframe(dataframe)
     self.true_range = self.get_true_range(self.dataframe)
     self.pdn = self.get_pdn(self.true_range)
     self.n = self.get_n(self.pdn, self.true_range)
 
-  def get_dataframe(self, asset: str, dataframe: pd.DataFrame = None) -> pd.DataFrame:
+  def init_dataframe(self, dataframe: pd.DataFrame = None) -> pd.DataFrame:
     """Get the asset's dataframe, add the previous close and true_range column. 
 
     Args:
-      asset: An asset's symbol.
       dataframe: A pandas dataframe, if no query is required.
     """
-    if dataframe is None:
-      dataframe = get_data(ticker=asset, interval="1d")[["low", "high", "close"]].tail(21).astype(object)
-    
+    if isinstance(dataframe, type(None)):
+        dataframe = self.get_dataframe(interval="1d")[["low", "high", "close"]].tail(21).astype(object)
     else:
       dataframe = dataframe[["low", "high", "close"]].astype(object)
 
@@ -184,26 +193,27 @@ class N:
     return round(((19 * pdn + true_range[-1]) / 20), 4)
 
 
-class Unit:
+class Unit(DataFrameClass):
   """This class represents the process of calculating one unit size for the asset.
 
   Args:
     asset: An asset's symbol.
     N: An asset's underlying volatility.
   """
-  def __init__(self, asset: str, n: float, account_size: float):
-    self.dollar_volatility = self.get_dollar_volatility(asset, n)
+  def __init__(self, asset: str, n: float, account_size: float, *args, **kwargs):
+    super().__init__(asset, *args, **kwargs)
+
+    self.dollar_volatility = self.get_dollar_volatility(n)
     self.unit = self.get_unit_size(self.dollar_volatility, account_size)
 
-  def get_dollar_volatility(self, asset: str, n: float) -> float:
+  def get_dollar_volatility(self, n: float) -> float:
     """Get the market dollar volatility of an asset.
 
     Args:
-      asset: An asset's symbol.
       n: An asset's underlying volatility.
     """ 
     # the live price * n
-    dataframe = get_data(ticker=asset, end_date=pd.Timestamp.today() + pd.DateOffset(10))
+    dataframe = self.get_dataframe(end_date=pd.Timestamp.today() + pd.DateOffset(10))
     pps = dataframe.close[-1]
     return n * pps
   

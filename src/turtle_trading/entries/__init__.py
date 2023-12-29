@@ -1,2 +1,2 @@
-from .entries import getsignal, get_breakout_prices
+from .entries import getsignal, getbreakouts
 from .adding import addunits

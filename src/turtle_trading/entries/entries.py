@@ -57,8 +57,8 @@ winner or not.
 """
 import pandas as pd
 
-from turtle_trading.position_sizing import getn
 from turtle_trading._data import DataFrameClass
+from turtle_trading.position_sizing.get_n import getn
 
 SYSTEM = {1: 20, 2: 55}
 
@@ -131,6 +131,7 @@ class Signal(DataFrameClass):
       raise AssertionError("System's gotta be 1 or 2.")
     
     super().__init__(asset, *args, **kwargs)
+    self.asset = asset
     dataframe = self.get_dataframe(interval="1d", reverse=True)
     self.result = self.get_system(system=system, price=price, dataframe=dataframe)
 
@@ -179,9 +180,10 @@ class Signal(DataFrameClass):
   
       if isinstance(_breakout, bool) and index > skip: # if a breakout
         loc, direction, last_twenty_dataframe = index, True if _breakout is True else False, last_twenty
+        ide = (last_twenty.iloc[0].name)
         break
 
-    N = getn(asset="", dataframe=last_twenty_dataframe) # n of the last breakout price
+    N = getn(ticker=self.asset, date=ide)
     breakout_price = dataframe.iloc[loc]["close"] # the last breakout price
 
     for index, row in enumerate(dataframe.iloc[:loc+1].iloc[::-1].iterrows()):  

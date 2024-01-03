@@ -11,6 +11,5 @@ __pycache__/
 env/
 dist/
 bash/
-src/tests/
 
 *.pyc

@@ -1,17 +1,18 @@
-#
-#
+#!/usr/bin/env python
+# -*- coding: utf8 -*- 
 """ A module for retrieving asset information. 
 Takes a ticker symbol and the asset type and returns the necessary data.
 
 @param -  symbol : str 
 
 """
-from yahoo_fin.stock_info import get_data
-import pandas as pd
 from typing import Any
+import pandas as pd
+
+from yahoo_fin.stock_info import get_data
 
 
-class SymbolNotFoundError(Exception):
+class SymbolNotFound(Exception):
   """ If symbol does not exist. """
 
 
@@ -37,7 +38,7 @@ class DataFrameClass:
     try:
       dataframe = get_data(self.asset, start_date, end_date, index_as_date, interval)
     except AssertionError:
-      raise SymbolNotFoundError
+      raise SymbolNotFound
 
     if reverse is True: 
       return dataframe.loc[::-1] # reverse

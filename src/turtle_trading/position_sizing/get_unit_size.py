@@ -3,25 +3,33 @@
 """ volatility adjusted position units """
 import datetime
 import pandas as pd
-from typing import Optional
+# from typing import Optional
 
 from yahoo_fin.stock_info import get_data
 from turtle_trading.position_sizing.get_n import getn
 
 
-def getunit(ticker: str, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
+def getunit(ticker: str, account: float, **kwargs):
   """ shortcut function for class: Unit """
-  return Unit(ticker, account, n, date).unit
+  return Unit(ticker, account, **kwargs).unit
 
 
 class Unit:
   """ this class represents the process for calculating unit size """
-  def __init__(self, ticker: str, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
+  def __init__(self, ticker: str, account: float, **kwargs):
     self.ticker = ticker.upper()
     self.account = account
-    self.date = date
-    if not date:
-      self.n = n
+
+    if 'n' in kwargs:
+      self.n = kwargs.get('n')
+      self.date = None
+
+    if 'date' in kwargs:
+      self.date = kwargs.get('date')
+      self.n = None
+
+    if 'n' and 'date' in kwargs:
+      raise AttributeError(f'Set only one of `n` or `date`')
 
     self.dollar_volatility_adjustment()
     self.unit = self.get_unit_size()

@@ -13,9 +13,10 @@ Examples using the `position_sizing` and `entries` modules:
 
 __NOTE__: The `exits` and `stops` modules aren't finished yet.
 
+### `position_sizing` module
 ```python
 """ using the position_sizing module """
-from turtle_trading.position_sizing import getn
+from turtle_trading.position_sizing import getn, getunit
 
 import datetime
 date = datetime.date(2023, 11, 10)
@@ -23,7 +24,8 @@ date = datetime.date(2023, 11, 10)
 getn(ticker='aapl') # >>> 2.5725
 getn(ticker='aapl', date=date) # >>> 2.9932
 
-# updating getunit
+getunit(ticker='aapl', account=1000000, n=1.2) # >>> 44.8898
+getunit(ticker='aapl', account=1000000, date=date) # >>> 17.9233
 ```
 
 More will be published soon.

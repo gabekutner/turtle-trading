@@ -1,2 +1,2 @@
-from .get_n import getn, N
-from .get_unit_size import getunit, Unit
+from .algorithms.get_n import getn, N
+from .algorithms.get_unit_size import getunit, Unit

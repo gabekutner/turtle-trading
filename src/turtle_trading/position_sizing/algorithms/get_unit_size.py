@@ -6,7 +6,7 @@ import pandas as pd
 from typing import Optional
 
 from yahoo_fin.stock_info import get_data
-from turtle_trading.position_sizing.get_n import getn
+from turtle_trading.position_sizing.algorithms.get_n import getn
 
 
 def getunit(ticker: str, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):

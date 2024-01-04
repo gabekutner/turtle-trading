@@ -10,14 +10,15 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {file="LICENSE"}
 requires-python = ">=3.8"
 description = "A collection of investment tools used by the Turtle Traders."
-authors = [{ name="Gabe Kutner", email="gabekutner1@gmail.com" },]
+authors = ["Gabe Kutner <gabekutner1@gmail.com>",]
+maintainers = ["Gabe Kutner <gabekutner1@gmail.com>",]
+
 keywords = ["python", "investing", "trading", "turtle-trading", "turtle"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "License :: OSI Approved :: MIT License",
     "Intended Audience :: Developers",
-    "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries",
 ]
 dependencies = [

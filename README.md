@@ -33,7 +33,25 @@ getsignal(ticker='aapl', system=1) # >>> True
 getsignal(ticker='aapl', system=2) # >>> True
 
 addunits(breakout=310, n=2.50) # >>> [310, 311.25, 312.5, 313.75]
-addunits(breakouts=310, n=2.50, units=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
+addunits(breakout=310, n=2.50, units=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
+```
+
+### `stops` module
+```python 
+""" using the stops module """
+from turtle_trading.entries import addunits
+from turtle_trading.stops import getstops
+
+units = addunits(breakout=28.30, n=1.20) # >>> [28.3, 28.9, 29.5, 30.1]
+
+getstops(unit_list=units, n=1.20) # >>> [27.7, 27.7, 27.7, 27.7]
+getstops(unit_list=units, n=1.20, stop_system="whipsaw") # >>> [27.7, 28.3, 28.9, 29.5]
+
+
+gapped_units = [28.3, 28.9, 29.5, 30.8]
+
+getstops(unit_list=gapped_units, n=1.20) # >>> [27.7, 27.7, 27.7, 28.4]
+getstops(unit_list=gapped_units, n=1.20, stop_system="whipsaw") # >>> [27.7, 28.3, 28.9, 30.2]
 ```
 
 More will be published soon.

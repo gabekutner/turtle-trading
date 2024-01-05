@@ -3,11 +3,10 @@
 """ adding units """
 from typing import Optional
 
-def addunits(breakout: float, n: float, units: Optional[int] = 4):
+def addunits(breakout: float, n: float, unit_list: Optional[int] = 4):
   """ adding units to existing positions """
-  
-  _units = [breakout]
-  for i in range(units-1):
-    _units.append(round((_units[i] + 0.5 * n), 4))
+  units = [breakout]
+  for i in range(unit_list-1):
+    units.append(round((units[i] + 0.5 * n), 4))
 
-  return _units
+  return units

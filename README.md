@@ -9,19 +9,27 @@ Download using pip:
 pip install turtle-trading
 ```
 
+__USAGE__: First, initialize a `DataFrameLoader` class to pass as an argument to each `turtle_trading` function.
+```python
+from turtle_trading import DataFrameLoader
+
+ticker = 'aapl'
+dataframe = DataFrameLoader(ticker)
+```
+
 ### `position_sizing` module
 ```python
 """ using the position_sizing module """
-from turtle_trading.position_sizing import getn, getunit
+from turtle_trading.position_sizing import getn, getunitsize
 
 import datetime
 date = datetime.date(2023, 11, 10)
 
-getn(ticker='aapl') # >>> 2.5725
-getn(ticker='aapl', date=date) # >>> 2.9932
+getn(dataframe) # >>> 2.7421
+getn(dataframe, date=date) # >>> 2.9932
 
-getunit(ticker='aapl', account=1000000, n=1.2) # >>> 44.8898
-getunit(ticker='aapl', account=1000000, date=date) # >>> 17.9233
+getunitsize(dataframe=dataframe, account=1000000, n=2.7421) # >>> 20.0475
+getunitsize(dataframe=dataframe, account=1000000, date=date) # >>> 17.9233
 ```
 
 ### `entries` module
@@ -29,8 +37,8 @@ getunit(ticker='aapl', account=1000000, date=date) # >>> 17.9233
 """ using the entries module """
 from turtle_trading.entries import getsignal, addunits
 
-getsignal(ticker='aapl', system=1) # >>> True
-getsignal(ticker='aapl', system=2) # >>> True
+getsignal(dataframe=dataframe, system=1) # >>> True
+getsignal(dataframe=dataframe, system=2) # >>> True
 
 addunits(breakout=310, n=2.50) # >>> [310, 311.25, 312.5, 313.75]
 addunits(breakout=310, n=2.50, units=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]

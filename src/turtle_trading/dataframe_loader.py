@@ -41,7 +41,8 @@ class DataFrameLoader:
   @property
   def live_price(self):
     """ get live price """
-    if str(self.dataframe.iloc[0].name).split("-")[0] != str(datetime.datetime.now().year):
+    if str(self.dataframe.iloc[0].name).split("-")[0] != str(datetime.datetime.now().year): 
+      # will work if ticker became public before current year, else will not work
       self.reverse()
 
     return self.dataframe.iloc[0].close
@@ -50,3 +51,11 @@ class DataFrameLoader:
     """ reset dataframe """
     self.dataframe = self.base_dataframe
     return self.dataframe
+  
+  def get_price(self, date: datetime.date): 
+    """ get price based on date """
+    if str(self.dataframe.iloc[0].name).split("-")[0] != str(datetime.datetime.now().year):
+      # will work if ticker became public before current year, else will not work
+      self.reverse()
+    
+    return self.start_at(date).iloc[0]['close']

@@ -3,8 +3,9 @@
 """ initialize a dataframe """
 import warnings
 import datetime
+import pandas as pd
 
-from yahoo_fin.stock_info import get_data
+from yahoo_fin.stock_info import get_data, get_live_price
 
 """ ignore Pandas Future Warning and SettingWithCopyWarnings """
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -41,11 +42,8 @@ class DataFrameLoader:
   @property
   def live_price(self):
     """ get live price """
-    if str(self.dataframe.iloc[0].name).split("-")[0] != str(datetime.datetime.now().year): 
-      # will work if ticker became public before current year, else will not work
-      self.reverse()
+    return get_live_price(self.ticker)
 
-    return self.dataframe.iloc[0].close
   
   def reset(self):
     """ reset dataframe """

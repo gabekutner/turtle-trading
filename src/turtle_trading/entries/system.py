@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-""" entry systems """
+""" entry systems - results come as booleans: True for a long breakout, False for a short breakout, None for no breakout  """
 from typing import Union, Literal
 
 from turtle_trading.entries.breakouts.breakout import getbreakouts, check_if_breakout
@@ -27,20 +27,23 @@ class EntrySignal:
     if self.system == 2:
       breakout_tuple = getbreakouts(self.dataframe, 55, include_current_extrema=True)
 
-      if check_if_breakout(breakout_tuple[0], breakout_tuple[1], breakout_tuple[2], breakout_tuple[3]):
-        return True
+      if check_if_breakout(breakout_tuple): # if a breakout
+        return True if breakout_tuple[2] >= breakout_tuple[0] else False # valid entry: true for long, false for short
       else:
-        return False
+        return None # invalid entry: not a breakout
       
     if self.system == 1:
-
       breakout_tuple = getbreakouts(self.dataframe, 20, include_current_extrema=True)
-      self.dataframe.reset()
 
-      if check_if_breakout(breakout_tuple[0], breakout_tuple[1], breakout_tuple[2], breakout_tuple[3]):
-        last_breakout = get_last_breakout(self.dataframe, 20)
-        self.dataframe.reset()
-        if get_last_breakout_profitability(self.dataframe, 2, last_breakout):
-          return False
+      if check_if_breakout(breakout_tuple):
         
-        else: return True
+        last_breakout = get_last_breakout(self.dataframe, 20)
+
+        if not get_last_breakout_profitability(self.dataframe, 2, last_breakout): # if false -> losing pos
+          return last_breakout[2] # valid entry: return direction for entry
+        
+        elif get_last_breakout_profitability(self.dataframe, 2, last_breakout): 
+          return None # invalid entry: bcuz last pos was winning, none for 
+
+      else:
+        return None # invalid entry: not a breakout

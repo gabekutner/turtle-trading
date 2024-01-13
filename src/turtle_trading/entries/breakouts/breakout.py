@@ -6,6 +6,7 @@ import pandas as pd
 from typing import Tuple, Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading.utils import is_market_open
 
 
 def getbreakouts(dataframe: DataFrameLoader, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False) -> Tuple[float]:
@@ -14,15 +15,23 @@ def getbreakouts(dataframe: DataFrameLoader, days: int, date: Optional[datetime.
   return Breakout(dataframe, days, date, include_current_extrema).breakouts
 
 
-def check_if_breakout(high: float, low: float, pos_high: float, pos_low: float) -> bool:
+def check_if_breakout(tuple: tuple[float]) -> bool:
   """ shortcut function for checking a breakout """
-  if pos_high >= high or pos_low <= low:
-    return True
+  if len(tuple) == 3:
+    # market is open, using live price
+    if tuple[2] >= tuple[0] or tuple[2] <= tuple[1]:
+      return True
+    
+  if len(tuple) == 4:
+    # market is closed, using high x low
+    if tuple[2] >= tuple[0] or tuple[3] <= tuple[1]:
+      return True
 
 
 class Breakout:
   """ this class represents finding breakout numbers """
   def __init__(self, dataframe: DataFrameLoader, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False):
+    self.dataframe_obj = dataframe
     self.dataframe = dataframe
     self.days = days
     self.date = date
@@ -44,10 +53,15 @@ class Breakout:
     return self.dataframe
   
   def find_extrema(self) -> Tuple[float]:
-    """ find the extrema """
-    maximum, minimum = self.dataframe['high'].max(), self.dataframe['low'].min()
+    """ find extrema """
+    maximum, minimum = self.dataframe['high'].max(), self.dataframe['low'].min() # correct
+
     if self.include_current_extrema:
-      pos_high, pos_low = self.dataframe.iloc[0]['high'], self.dataframe.iloc[0]['low']
-      return (maximum, minimum, pos_high, pos_low)
+      if is_market_open(datetime.datetime.now()):
+        return (maximum, minimum, self.dataframe_obj.live_price)
+
+      else:
+        pos_high, pos_low = self.dataframe.iloc[0]['high'], self.dataframe.iloc[0]['low']
+        return (maximum, minimum, pos_high, pos_low)
 
     return (maximum, minimum)

@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 """ entry systems - results come as booleans: True for a long breakout, False for a short breakout, None for no breakout  """
-from typing import Union, Literal
-
-from turtle_trading.entries.breakouts.breakout import getbreakouts, check_if_breakout
 from turtle_trading.entries.breakouts.last_breakout import get_last_breakout, get_last_breakout_profitability
 from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading.config.breakouts.breakout import getbreakouts, check_if_breakout
+from turtle_trading.config.exceptions import arg_equals
 
 
-def getsignal(dataframe: DataFrameLoader, system: Union[Literal[1], Literal[2]]) -> bool:
+def getentry_signal(dataframe: DataFrameLoader, system: int) -> bool:
   """ shortcut function for class: EntrySignal """
+  arg_equals("system", (1, 2))
+
   dataframe.reset()
   return EntrySignal(dataframe, system).signal
 
 
 class EntrySignal:
   """ this class represents an entry signal, true for a valid entry, false for invalid """
-  def __init__(self, dataframe: DataFrameLoader, system: Union[Literal[1], Literal[2]]):
+  def __init__(self, dataframe: DataFrameLoader, system: int):
     self.dataframe = dataframe
     self.system = system
 
@@ -43,7 +44,7 @@ class EntrySignal:
           return last_breakout[2] # valid entry: return direction for entry
         
         elif get_last_breakout_profitability(self.dataframe, 2, last_breakout): 
-          return None # invalid entry: bcuz last pos was winning, none for 
+          return None # invalid entry: last pos was winning
 
       else:
         return None # invalid entry: not a breakout

@@ -9,7 +9,7 @@ Download using pip:
 pip install turtle-trading
 ```
 
-__USAGE__: First, initialize a `DataFrameLoader` class to pass as an argument to each `turtle_trading` function.
+__USAGE__: First, initialize a `DataFrameLoader` class to pass as an argument to most `turtle_trading` functions as shown below.
 ```python
 from turtle_trading import DataFrameLoader
 
@@ -35,13 +35,13 @@ getunitsize(dataframe=dataframe, account=1000000, date=date) # >>> 17.9233
 ### `entries` module
 ```python
 """ using the entries module """
-from turtle_trading.entries import getsignal, addunits
+from turtle_trading.entries import getentry_signal, addunits
 
 getsignal(dataframe=dataframe, system=1) # >>> True
 getsignal(dataframe=dataframe, system=2) # >>> True
 
 addunits(breakout=310, n=2.50) # >>> [310, 311.25, 312.5, 313.75]
-addunits(breakout=310, n=2.50, units=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
+addunits(breakout=310, n=2.50, units_num=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
 ```
 
 ### `stops` module
@@ -52,16 +52,26 @@ from turtle_trading.stops import getstops
 
 units = addunits(breakout=28.30, n=1.20) # >>> [28.3, 28.9, 29.5, 30.1]
 
-getstops(unit_list=units, n=1.20) # >>> [27.7, 27.7, 27.7, 27.7]
-getstops(unit_list=units, n=1.20, stop_system="whipsaw") # >>> [27.7, 28.3, 28.9, 29.5]
+getstops(stop_system="regular", unit_list=units, n=1.20) # >>> [27.7, 27.7, 27.7, 27.7]
+getstops(stop_system="whipsaw", unit_list=units, n=1.20) # >>> [27.7, 28.3, 28.9, 29.5]
 
 
 gapped_units = [28.3, 28.9, 29.5, 30.8]
 
-getstops(unit_list=gapped_units, n=1.20) # >>> [27.7, 27.7, 27.7, 28.4]
-getstops(unit_list=gapped_units, n=1.20, stop_system="whipsaw") # >>> [27.7, 28.3, 28.9, 30.2]
+getstops(stop_system="regular", unit_list=gapped_units, n=1.20) # >>> [27.7, 27.7, 27.7, 28.4]
+getstops(stop_system="whipsaw", unit_list=gapped_units, n=1.20) # >>> [27.7, 28.3, 28.9, 30.2]
 ```
 
-More will be published soon.
+### `exits` module
+```python
+import datetime
+from turtle_trading.exits import getexit_signal
+
+getexit_signal(dataframe=dataframe, system=1, pos_direction=True) # >>> True
+
+getexit_siganl(dataframe=dataframe, system=1, pos_direction=True, date=datetime.date(2023, 11, 10)) # >>> False
+```
+
+Official documentation coming soon...
 
 For issues, look [here](https://github.com/gabekutner/turtle-trading/blob/main/.github/ISSUE_TEMPLATE.md).

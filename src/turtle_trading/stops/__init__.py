@@ -1,1 +1,1 @@
-from .stop_placement import getstops
+from .stops import getstops, Stop

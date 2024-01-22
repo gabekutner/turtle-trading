@@ -10,7 +10,7 @@ from turtle_trading.dataframe_loader import DataFrameLoader
 
 def getunitsize(dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
   """ shortcut function for class: Unit """
-  dataframe.reset()
+  dataframe.reset() # reverse not necessary
   return Unit(dataframe, account, n, date).unit
 
 
@@ -35,14 +35,12 @@ class Unit:
   def dollar_volatility_adjustment(self) -> float: 
     """ calculating the dollar volatility of the asset """
     if self.date:
-
       price = self.dataframe.start_at(self.date).iloc[0]['close']
       n = getn(self.dataframe, self.date)
       self.dollar_volatility = n * price
       return self.dollar_volatility
 
     if not self.date:
-
       price = self.dataframe.live_price
       self.dollar_volatility = self.n * price
       return self.dollar_volatility

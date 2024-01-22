@@ -7,6 +7,7 @@ import pandas as pd
 from typing import Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading.utils import reset_and_reverse
 
 """ ignore Pandas Future Warning and SettingWithCopyWarnings """
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -33,8 +34,8 @@ class N:
 
   def edit_dataframe(self) -> pd.DataFrame:
     """ edit dataframe """
+    self.dataframe = reset_and_reverse(self.dataframe)
     self.dataframe.edit_columns(['low', 'high', 'close'])
-    self.dataframe.reverse()
 
     if not self.date:
       self.dataframe = self.dataframe.dataframe.head(20)

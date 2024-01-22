@@ -1,84 +1,51 @@
-# #!/usr/bin/env python
-# # -*- coding: UTF8 -*-
-# """https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+""" exits
 
-# Exits
-# The Turtles used breakout based exits for profitable positions.
+To exit from a System 1 trade, if the 10 day high (short trade) was broken, that meant close the trade. 
+Likewise if the 10 day low (long trade) was broken, close the trade. To exit from a System 2 trade, 
+a 20 day breakout in the opposite direction would signal the end of the trade.
+"""
+import datetime
+from typing import Literal, Union
 
-# There is an old saying: "you can never go broke taking a profit." The 
-# Turtles would not agree with this statement. Getting out of winning positions
-# too early, i.e. "taking a profit" too early, is one of the most common mistakes
-# when trading trend following systems.
-
-# Prices never go straight up; therefore it is necessary to let the prices go against you if
-# you are going to ride a trend. Early in a trend this can often mean watching decent
-# profits of 10% to 30% fade to a small loss. In the middle of a trend, it might mean
-# watching a profit of 80% to 100% drop by 30% to 40%. The temptation to lighten the 
-# position to "lock in profits" can be very great.
-
-# The Turtles knew that where you took a profit could make the difference between
-# winning and losing.
-
-# The Turtle System enters on breakouts. Most breakouts do not result in trends. This
-# means that most of the trades that the Turtles made resulted in losses. If the winning
-# trades did not earn enough on average to offset these losses, the Turtles would have
-# lost money. Every profitable trading system has a different optimal exit point.
-
-# Consider the Turtle System; if you exit winning positions at a 1 N profit while you
-# exited losing positions at a 2 N loss you would need twice as many winners to offset
-# the losses from the losing trades.
-
-# There is a complex relationship between the components of a trading system. This
-# means that you can't consider the proper exit for a profitable position without
-# considering the entry, money management and other factors.
-
-# The proper exit for winning positions is one of the most important aspects of trading,
-# and the least appreciated. Yet it can make the difference between winning and losing.
-
-# Turtle Exits
-
-# The System 1 exit was a 10 day low for long positions and a 10 day high for short
-# positions. All the Units in the position would be exited if the price went against the
-# position for a 10 day breakout.
-
-# The System 2 exit was a 20 day low for long positions and a 20 day high for short
-# positions. All the Units in the position would be exited if the price went against the
-# position for a 20 day breakout.
-
-# As with entries, the Turtles did not typically place exit stop orders, but instead watched
-# the price during the day, and started to phone in exit orders as soon as the price traded
-# through the exit breakout price.
-# """
-
-# # n
-# # breakout
-# # long or short: bool
-
-# def getexit(n, breakout, type: bool):
-#   """Return a decision on whether to exit or not.
-
-#   Args:
-#     n: 'N' of the breakout.
-#     breakout: The breakout price, i.e. the first unit entered.
-#     units: How many units in that same position there are.
-#   """
-#   return Exit(n=n, breakout=breakout, type=type)
+from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading.utils import reset_and_reverse
+from turtle_trading.entries import getbreakouts
 
 
-# class Exit:
-#   def __init__(self, n, breakout, type: bool):
+def shortcut_check_breakout(df: DataFrameLoader, system: Union[Literal[1], Literal[2]], direction: bool, date: datetime.date = None,) -> bool:
+  """ shortcut func """
+  dir = 10 if system == 1 else 20
+  print(dir)
+  breakout_tuple = getbreakouts(dataframe=df, days=dir, date=date, include_current_extrema=True)
+  print(breakout_tuple)
 
-#     self.exit_signal = self.signal()
+  if direction is True: # long pos 
+    if breakout_tuple[3] <= breakout_tuple[1]: # if short breakout
+      return True
+
+  if direction is False: # short pos
+    if breakout_tuple[2] >= breakout_tuple[0]: # if long breakout
+      return True
+    
+  return False
+
+
+def getdecision(df: DataFrameLoader, system: Union[Literal[1], Literal[2]], direction: bool, date: datetime.date = None) -> bool:
+  """ Get the exit decision.
+
+  Returns:
+    True: exit
+    False: no exit 
+
+  df: DataFrameLoader
+  date: Date the position was entered
+  system: 10-day (1) or 20-day (2)
+  direction: short (f) or long (t)
+  """
+  if system == 1: # 10-day
+    return shortcut_check_breakout(df, date, system, direction)
   
-  
-
-#   def signal(self) -> bool:
-#     """Return a boolean determing whether to exit or not.
-
-#     Args:
-      
-
-#     Returns:
-#       True to exit, False to not. 
-#     """
-#     # First, get the  
+  if system==2: # 20-day
+    return shortcut_check_breakout(df, date, system, direction)

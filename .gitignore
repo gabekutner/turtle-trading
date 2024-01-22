@@ -13,3 +13,7 @@ dist/
 bash/
 
 *.pyc
+
+# temp
+
+src/turtle_trading/query.py

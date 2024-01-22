@@ -2,14 +2,13 @@
 # -*- coding: utf8 -*-
 """ stop placement """
 from itertools import cycle
-
 from turtle_trading.config.exceptions import arg_equals
 
 
-def getstops(stop_system: str, unit_list: list[float], n: float):
+def getstops(stop_system: str, unit_list: list[float], orig_n: float):
   """ shortcut function for class: Stop """
   arg_equals("stop_system", ("regular", "whipsaw"))
-  return Stop(stop_system=stop_system, unit_list=unit_list, n=n).stops
+  return Stop(stop_system=stop_system, unit_list=unit_list, n=orig_n).stops
 
 
 class Stop:
@@ -36,7 +35,6 @@ class Stop:
   def whipsaw_stops(self):
     """ the whipsaw stop strategy """
     return [round(unit - self.half_n, 2) for unit in self.unit_list]
-  
 
   def regular_stops(self):
     """ the regular stop strategy """

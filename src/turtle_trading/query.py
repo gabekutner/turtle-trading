@@ -45,6 +45,20 @@ def get_live_price(soup: BeautifulSoup):
   return live_price.text
 
 
+""" To use with turtle_trading module, convert data to DataFrame
+
+timestamp as index
+columns - high, low, close
+
+that's it, .. for basic functionality 
+
+afterwards add options to save DataFrame as pickle files for faster querying
+
+
+
+"""
+
+
 def get_data(soup):
   """ get price history """
   table_wrapper = soup.find("div", {"class": "download-data"}).find("div", {"class": "overflow--table"})

@@ -8,9 +8,9 @@ from turtle_trading.position_sizing.algorithms.get_n import getn
 from turtle_trading.dataframe_loader import DataFrameLoader
 
 
-def getunitsize(dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
+def getunits(dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
   """ shortcut function for class: Unit """
-  dataframe.reset() # reverse not necessary
+  dataframe.reset()
   return Unit(dataframe, account, n, date).unit
 
 

@@ -4,7 +4,7 @@
 import datetime
 from typing import Tuple, Optional
 
-from turtle_trading.config.breakouts.breakout import getbreakouts, check_if_breakout
+from turtle_trading.config.breakout import getbreakouts, check_if_breakout
 from turtle_trading.position_sizing.algorithms.get_n import getn
 from turtle_trading.dataframe_loader import DataFrameLoader
 from turtle_trading.config.utils import reset_and_reverse

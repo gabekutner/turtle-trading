@@ -20,7 +20,7 @@ dataframe = DataFrameLoader(ticker)
 ### `position_sizing` module
 ```python
 """ using the position_sizing module """
-from turtle_trading.position_sizing import getn, getunitsize
+from turtle_trading.position_sizing import getn, getunits
 
 import datetime
 date = datetime.date(2023, 11, 10)
@@ -28,20 +28,22 @@ date = datetime.date(2023, 11, 10)
 getn(dataframe) # >>> 2.7421
 getn(dataframe, date=date) # >>> 2.9932
 
-getunitsize(dataframe=dataframe, account=1000000, n=2.7421) # >>> 20.0475
-getunitsize(dataframe=dataframe, account=1000000, date=date) # >>> 17.9233
+getunits(dataframe=dataframe, account=1000000, n=2.7421) # >>> 20.0475
+getunits(dataframe=dataframe, account=1000000, date=date) # >>> 17.9233
 ```
 
 ### `entries` module
 ```python
 """ using the entries module """
-from turtle_trading.entries import getentry_signal, addunits
+from turtle_trading.entries import getentry, addunits
 
-getsignal(dataframe=dataframe, system=1) # >>> True
-getsignal(dataframe=dataframe, system=2) # >>> True
+getentry(dataframe=dataframe, system=1) # >>> True
+getentry(dataframe=dataframe, system=2) # >>> True
 
-addunits(breakout=310, n=2.50) # >>> [310, 311.25, 312.5, 313.75]
-addunits(breakout=310, n=2.50, units_num=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
+addunits(orig_breakout=310, orig_n=2.50) # >>> [310, 311.25, 312.5, 313.75]
+addunits(orig_breakout=310, orig_n=2.50, number_of_units=6) # >>> [310, 311.25, 312.5, 313.75, 315.0, 316.25]
+
+# DISCLAIMER: In the rules, no more than 4 more units are allowed for a single position.
 ```
 
 ### `stops` module
@@ -50,26 +52,26 @@ addunits(breakout=310, n=2.50, units_num=6) # >>> [310, 311.25, 312.5, 313.75, 3
 from turtle_trading.entries import addunits
 from turtle_trading.stops import getstops
 
-units = addunits(breakout=28.30, n=1.20) # >>> [28.3, 28.9, 29.5, 30.1]
+units = addunits(orig_breakout=28.30, orig_n=1.20) # >>> [28.3, 28.9, 29.5, 30.1]
 
-getstops(stop_system="regular", unit_list=units, n=1.20) # >>> [27.7, 27.7, 27.7, 27.7]
-getstops(stop_system="whipsaw", unit_list=units, n=1.20) # >>> [27.7, 28.3, 28.9, 29.5]
+getstops(stop_system="regular", unit_list=units, orig_n=1.20) # >>> [27.7, 27.7, 27.7, 27.7]
+getstops(stop_system="whipsaw", unit_list=units, orig_n=1.20) # >>> [27.7, 28.3, 28.9, 29.5]
 
 
 gapped_units = [28.3, 28.9, 29.5, 30.8]
 
-getstops(stop_system="regular", unit_list=gapped_units, n=1.20) # >>> [27.7, 27.7, 27.7, 28.4]
-getstops(stop_system="whipsaw", unit_list=gapped_units, n=1.20) # >>> [27.7, 28.3, 28.9, 30.2]
+getstops(stop_system="regular", unit_list=gapped_units, orig_n=1.20) # >>> [27.7, 27.7, 27.7, 28.4]
+getstops(stop_system="whipsaw", unit_list=gapped_units, orig_n=1.20) # >>> [27.7, 28.3, 28.9, 30.2]
 ```
 
 ### `exits` module
 ```python
 import datetime
-from turtle_trading.exits import getexit_signal
+from turtle_trading.exits import getexit
 
-getexit_signal(dataframe=dataframe, system=1, pos_direction=True) # >>> True
+getexit(dataframe=dataframe, system=1, pos_direction=True) # >>> True
 
-getexit_siganl(dataframe=dataframe, system=1, pos_direction=True, date=datetime.date(2023, 11, 10)) # >>> False
+getexit(dataframe=dataframe, system=1, pos_direction=True, date=datetime.date(2023, 11, 10)) # >>> False
 ```
 
 Official documentation coming soon...

@@ -16,7 +16,7 @@ def getentry(dataframe: DataFrameLoader, system: int) -> bool:
 
 
 class EntrySignal:
-  """ this class represents an entry signal, true for a valid entry, false for invalid """
+  """ this class represents an entry signal, true for a valid long entry, false for valid short entry, none for invalid. """
   def __init__(self, dataframe: DataFrameLoader, system: int):
     self.dataframe = dataframe
     self.days = 20 if system == 1 else 55

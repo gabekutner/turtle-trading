@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; turtle-trading 3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=b576230a"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src" href="modules.html" />
+    <link rel="prev" title="Welcome to turtle-trading’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            turtle-trading
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-position-sizing-module">the Position Sizing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-entries-module">the Entries module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-stops-module">the Stops module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-exits-module">the Exits module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">turtle-trading</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<p>Install the <strong>turtle-trading</strong> library using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>turtle-trading
+</pre></div>
+</div>
+<p>Before we start using the <strong>turtle-trading</strong> modules, initialize a DataFrameLoader class.
+This loads the given ticker’s price data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We’ll need this for most of the rest of the <strong>turtle-trading</strong> functions.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">turtle_trading</span> <span class="kn">import</span> <span class="n">DataFrameLoader</span>
+<span class="linenos">2</span>
+<span class="hll"><span class="linenos">3</span><span class="n">dataframe</span> <span class="o">=</span> <span class="n">DataFrameLoader</span><span class="p">(</span><span class="s1">&#39;aapl&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<section id="the-position-sizing-module">
+<h2>the Position Sizing module<a class="headerlink" href="#the-position-sizing-module" title="Link to this heading"></a></h2>
+<p>The <strong>turtle_trading.position_sizing</strong> module has two main functionalities.</p>
+<ul class="simple">
+<li><p>Get the underlying volatility of a particular asset - N.</p></li>
+<li><p>Calculate the position size, or how many shares represents 1 unit.</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">turtle_trading.position_sizing</span> <span class="kn">import</span> <span class="n">getn</span><span class="p">,</span> <span class="n">getunits</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="linenos"> 4</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="n">getn</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; 2.7421</span>
+<span class="linenos"> 7</span><span class="n">other_n</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; 2.9932</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">one_unit</span> <span class="o">=</span> <span class="n">getunits</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; 20.0475</span>
+<span class="linenos">10</span><span class="n">one_unit</span> <span class="o">=</span> <span class="n">getunits</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; 17.9233</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1"># NOTE: Passing in a date and n argument to the getunits function will raise an AttributeError.</span>
+</pre></div>
+</div>
+<p>Also in the <strong>position_sizing</strong> module are exceptions, to be raised by your own discretion.
+They are risk management rules.</p>
+<ul class="simple">
+<li><p><strong>SingleMarketsException</strong>: A maximum of 4 Units per market (position).</p></li>
+<li><p><strong>CloselyCorrelatedMarketsException</strong>: A maximum of 6 Units in one particular direction, for closely correlated markets.</p></li>
+<li><p><strong>LooselyCorrelatedMarketsException</strong>: A maximum of 10 Units in one particular direction, for loosely correlated markets.</p></li>
+<li><p><strong>SingleDirectionException</strong>: A maximum of 12 Units in one direction, long or short.</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">turtle_trading.exceptions</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="linenos"> 2</span>  <span class="n">SingleMarketsException</span><span class="p">,</span>
+<span class="linenos"> 3</span>  <span class="n">CloselyCorrelatedMarketsException</span><span class="p">,</span>
+<span class="linenos"> 4</span>  <span class="n">LooselyCorrelatedMarketsException</span><span class="p">,</span>
+<span class="linenos"> 5</span>  <span class="n">SingleDirectionException</span>
+<span class="linenos"> 6</span><span class="p">)</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">if</span> <span class="n">units_of_aapl</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+<span class="linenos"> 9</span>  <span class="k">raise</span> <span class="n">SingleMarketsException</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">if</span> <span class="n">closely_correlated_units</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+<span class="linenos">12</span>  <span class="k">raise</span> <span class="n">CloselyCorrelatedMarketsException</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">if</span> <span class="n">loosely_correlated_units</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+<span class="linenos">15</span>  <span class="k">raise</span> <span class="n">LooselyCorrelatedMarketsException</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="k">if</span> <span class="n">long_units</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>
+<span class="linenos">18</span>  <span class="k">raise</span> <span class="n">SingleDirectionException</span>
+</pre></div>
+</div>
+</section>
+<section id="the-entries-module">
+<h2>the Entries module<a class="headerlink" href="#the-entries-module" title="Link to this heading"></a></h2>
+<p>The <strong>turtle_trading.entries</strong> module has two main functionalities.</p>
+<ul class="simple">
+<li><p>Get an entry signal, if there is one.</p></li>
+<li><p>Add units to an already existing position.</p></li>
+</ul>
+<p>There are two systems you can use for entry signals. They are explained in the <a class="reference external" href="https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf">The Original Turtle Trading Rules</a>.
+Quickly, there are two systems: 1 and 2. System 1 is more complicated than System 2.</p>
+<ul class="simple">
+<li><p><strong>System 1</strong>: based on a 20-day breakout, unless the previous breakout resulted in a winning trade.</p></li>
+<li><p><strong>System 2</strong>: based on a 55-day breakout, regardless of the outcome of the previous breakout.</p></li>
+</ul>
+<p>The results of the <strong>getentry</strong> function are in booleans.</p>
+<ul class="simple">
+<li><p>True means enter long.</p></li>
+<li><p>False means enter short.</p></li>
+<li><p>None means don’t enter.</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">turtle_trading.entries</span> <span class="kn">import</span> <span class="n">getentry</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">getentry</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+<span class="linenos">4</span><span class="n">getentry</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</pre></div>
+</div>
+<p>The <strong>addunits</strong> function takes in the entry price (orig_breakout) and N at that entry price (orig_n).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">turtle_trading.entries</span> <span class="kn">import</span> <span class="n">addunits</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">addunits</span><span class="p">(</span><span class="n">orig_breakout</span><span class="o">=</span><span class="mi">310</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">2.50</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [310, 311.25, 312.5, 313.75]</span>
+<span class="linenos">4</span><span class="n">addunits</span><span class="p">(</span><span class="n">orig_breakout</span><span class="o">=</span><span class="mi">310</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">2.50</span><span class="p">,</span> <span class="n">number_of_units</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [310, 311.25, 312.5, 313.75, 315.0, 316.25]</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="c1"># DISCLAIMER: In the rules, no more than 4 more units are allowed for a single position.</span>
+</pre></div>
+</div>
+</section>
+<section id="the-stops-module">
+<h2>the Stops module<a class="headerlink" href="#the-stops-module" title="Link to this heading"></a></h2>
+<p>The <strong>turtle_trading.stops</strong> module has one main functionality.</p>
+<ul class="simple">
+<li><p>Calculate the stops for each unit of a position.</p></li>
+</ul>
+<p>There are two strategies you can use for calculating stops: the regular stop strategy and the whipsaw stop strategy.</p>
+<ul class="simple">
+<li><p>The regular stop strategy: Each stop is the same, the stop being the difference between the last unit added unit and 2N.</p></li>
+<li><p>The whipsaw stop strategy: Each stop is the difference between the unit and 2N.</p></li>
+</ul>
+<p>For gapped units, meaning units manually added not according to the <strong>addunits</strong> function, the results are a little
+different - but only for the regular stop strategy.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">turtle_trading.stops</span> <span class="kn">import</span> <span class="n">getstops</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.3</span><span class="p">,</span> <span class="mf">28.9</span><span class="p">,</span> <span class="mf">29.5</span><span class="p">,</span> <span class="mf">30.1</span><span class="p">]</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">getstops</span><span class="p">(</span><span class="n">stop_system</span><span class="o">=</span><span class="s2">&quot;regular&quot;</span><span class="p">,</span> <span class="n">unit_list</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">1.20</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [27.7, 27.7, 27.7, 27.7]</span>
+<span class="linenos"> 6</span><span class="n">getstops</span><span class="p">(</span><span class="n">stop_system</span><span class="o">=</span><span class="s2">&quot;whipsaw&quot;</span><span class="p">,</span> <span class="n">unit_list</span><span class="o">=</span><span class="n">units</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">1.20</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [27.7, 28.3, 28.9, 29.5]</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="n">gapped_units</span> <span class="o">=</span> <span class="p">[</span><span class="mf">28.3</span><span class="p">,</span> <span class="mf">28.9</span><span class="p">,</span> <span class="mf">29.5</span><span class="p">,</span> <span class="mf">30.8</span><span class="p">]</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">getstops</span><span class="p">(</span><span class="n">stop_system</span><span class="o">=</span><span class="s2">&quot;regular&quot;</span><span class="p">,</span> <span class="n">unit_list</span><span class="o">=</span><span class="n">gapped_units</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">1.20</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [27.7, 27.7, 27.7, 28.4]</span>
+<span class="linenos">11</span><span class="n">getstops</span><span class="p">(</span><span class="n">stop_system</span><span class="o">=</span><span class="s2">&quot;whipsaw&quot;</span><span class="p">,</span> <span class="n">unit_list</span><span class="o">=</span><span class="n">gapped_units</span><span class="p">,</span> <span class="n">orig_n</span><span class="o">=</span><span class="mf">1.20</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [27.7, 28.3, 28.9, 30.2]</span>
+</pre></div>
+</div>
+</section>
+<section id="the-exits-module">
+<h2>the Exits module<a class="headerlink" href="#the-exits-module" title="Link to this heading"></a></h2>
+<p>The <strong>turtle_trading.exits</strong> module has one main functionality.</p>
+<ul class="simple">
+<li><p>Get a stop signal, if there is one.</p></li>
+</ul>
+<p>There are two systems you can use for entry signals. They are explained in the <a class="reference external" href="https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf">The Original Turtle Trading Rules</a>.
+Quickly, there are two systems: 1 and 2. System 1 is more complicated than System 2.</p>
+<ul class="simple">
+<li><p><strong>System 1</strong>: based on a 10-day low for long positions and a 10-day high for short positions.</p></li>
+<li><p><strong>System 2</strong>: based on a 20-day low for long positions and a 20-day high for short positions.</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">turtle_trading.exits</span> <span class="kn">import</span> <span class="n">getexit</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">getexit</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+<span class="linenos">4</span>
+<span class="linenos">5</span><span class="n">getexit</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos_direction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="c1"># &gt;&gt;&gt; False</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to turtle-trading’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="src" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Gabe Kutner.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

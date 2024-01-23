@@ -5,18 +5,25 @@
 
 Welcome to turtle-trading's documentation!
 ==========================================
+**turtle-trading** is a Python library containing a collection of investing tools 
+used by the Original Turtles. All code is based on the ideas in `The Original Turtle Trading Rules <https://oxfordstrat.com/coasdfASD32/uploads/2016/01/turtle-rules.pdf>`_.
+
+.. note:: 
+   This project is under active development.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   usage
    modules
 
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. Indices and tables
+.. ==================
+
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`

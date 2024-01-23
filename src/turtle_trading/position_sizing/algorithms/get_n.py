@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-""" the underlying volatility of an asset """
+""" The underlying volatility of an asset. """
 import warnings
 import datetime
 import pandas as pd
@@ -15,25 +15,38 @@ pd.set_option('mode.chained_assignment', None)
 
 
 def getn(dataframe: DataFrameLoader, date: Optional[datetime.date] = None):
-  """ shortcut function for class: N  """
+  """A shortcut function for class: N.
+  
+  :param dataframe: A DataFrameLoader object.
+  :param date: Optional, a datetime.date object.
+
+  :returns: N of an asset in the given time date.
+  """
   dataframe.reset()
   return N(dataframe, date).n
 
 
 class N:
-  """ this class represents the process for calculating `N` """
+  """This class represents the process for calculating N.
+  
+  :param dataframe: A DataFrameLoader object.
+  :param date: Optional, a datetime.date object.
+  """
   def __init__(self, dataframe: DataFrameLoader, date: Optional[datetime.date] = None):
     self.dataframe = dataframe
     self.date = date
 
-    self.edit_dataframe() # converted to dataframe
-    self.append_new_columns()
+    # Private
+    self._edit_dataframe() # converted to dataframe
+    self._append_new_columns()
+
+    # Public
     self.pdn = self.get_pdn()
     self.n = self.get_n()
 
 
-  def edit_dataframe(self) -> pd.DataFrame:
-    """ edit dataframe """
+  def _edit_dataframe(self) -> pd.DataFrame:
+    """ Configure dataframe for calculating N. """
     self.dataframe = reset_and_reverse(self.dataframe)
     self.dataframe.edit_columns(['low', 'high', 'close'])
 
@@ -45,8 +58,8 @@ class N:
     return self.dataframe
 
 
-  def append_new_columns(self) -> pd.DataFrame:
-    """ create previous close and true range columns """
+  def _append_new_columns(self) -> pd.DataFrame:
+    """ Create previous close and true range columns. """
     self.dataframe['previous_close'] = self.dataframe['close'].shift(-1)
     self.dataframe['true_range'] = 0
   
@@ -63,10 +76,10 @@ class N:
 
 
   def get_pdn(self) -> float:
-    """ calculate the previous day's n """
+    """ Calculate the previous day's N. """
     return sum(self.dataframe['true_range'][1:]) / 20
   
 
   def get_n(self) -> float:
-    """ calculate n """
+    """ Calculate N. """
     return round(((19 * self.pdn + self.dataframe['true_range'][-1]) / 20), 4)

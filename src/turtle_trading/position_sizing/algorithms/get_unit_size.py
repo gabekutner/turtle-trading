@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-""" volatility adjusted position units """
+""" Volatility adjusted position units. """
 import datetime
 from typing import Optional
 
@@ -9,13 +9,27 @@ from turtle_trading.dataframe_loader import DataFrameLoader
 
 
 def getunits(dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
-  """ shortcut function for class: Unit """
+  """A shortcut function for class: Unit.
+  
+  :param dataframe: A DataFrameLoader object.
+  :param account: The account value.
+  :param n: Optional, N.
+  :param date: Optional, a datetime.date object.
+
+  :returns: One unit of the given asset.
+  """
   dataframe.reset()
   return Unit(dataframe, account, n, date).unit
 
 
 class Unit:
-  """ this class represents the process for calculating unit size """
+  """This class represents the process for calculating unit size.
+
+  :param dataframe: A DataFrameLoader object.
+  :param account: The account value.
+  :param n: Optional, N.
+  :param date: Optional, a datetime.date object.
+  """
   def __init__(self, dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
     self.dataframe = dataframe
     self.account = account

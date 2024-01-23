@@ -6,7 +6,7 @@ import pandas as pd
 from typing import Tuple, Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
-from turtle_trading.config.utils import is_market_open
+from turtle_trading._config.utils import is_market_open
 
 
 def getbreakouts(dataframe: DataFrameLoader, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False) -> Tuple[float]:

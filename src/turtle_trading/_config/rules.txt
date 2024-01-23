@@ -1,0 +1,5 @@
+Tactics
+
+1. Turtles did not use stops orders, rather they used limit orders and watched 
+   the markets for their stops. For convenience and because I am not a turtle
+   trader, I use limit orders with stops.

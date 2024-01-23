@@ -7,7 +7,7 @@ import pandas as pd
 from typing import Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
-from turtle_trading.config.utils import reset_and_reverse
+from turtle_trading._config.utils import reset_and_reverse
 
 """ ignore Pandas Future Warning and SettingWithCopyWarnings """
 warnings.simplefilter(action='ignore', category=FutureWarning)

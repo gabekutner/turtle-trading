@@ -1,3 +1,3 @@
-# RECENT: Cleaned code for all four modules.
-# NEXT: Sphinx documentation.
-__version__ = "3.1"
+# RECENT: Sphinx documentation.
+# NEXT: Clean code, live bot -> query.py.
+__version__ = "3.2"

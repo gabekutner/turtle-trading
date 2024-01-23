@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>turtle_trading.position_sizing package &#8212; turtle-trading 3.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=b576230a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="turtle_trading.position_sizing.algorithms package" href="turtle_trading.position_sizing.algorithms.html" />
+    <link rel="prev" title="turtle_trading.exits package" href="turtle_trading.exits.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="turtle-trading-position-sizing-package">
+<h1>turtle_trading.position_sizing package<a class="headerlink" href="#turtle-trading-position-sizing-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html">turtle_trading.position_sizing.algorithms package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#module-turtle_trading.position_sizing.algorithms.get_n">turtle_trading.position_sizing.algorithms.get_n module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.N"><code class="docutils literal notranslate"><span class="pre">N</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.N.append_new_columns"><code class="docutils literal notranslate"><span class="pre">N.append_new_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.N.edit_dataframe"><code class="docutils literal notranslate"><span class="pre">N.edit_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.N.get_n"><code class="docutils literal notranslate"><span class="pre">N.get_n()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.N.get_pdn"><code class="docutils literal notranslate"><span class="pre">N.get_pdn()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_n.getn"><code class="docutils literal notranslate"><span class="pre">getn()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#module-turtle_trading.position_sizing.algorithms.get_unit_size">turtle_trading.position_sizing.algorithms.get_unit_size module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_unit_size.Unit"><code class="docutils literal notranslate"><span class="pre">Unit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_unit_size.Unit.dollar_volatility_adjustment"><code class="docutils literal notranslate"><span class="pre">Unit.dollar_volatility_adjustment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_unit_size.Unit.get_unit_size"><code class="docutils literal notranslate"><span class="pre">Unit.get_unit_size()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#turtle_trading.position_sizing.algorithms.get_unit_size.getunits"><code class="docutils literal notranslate"><span class="pre">getunits()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turtle_trading.position_sizing.algorithms.html#module-turtle_trading.position_sizing.algorithms">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-turtle_trading.position_sizing.exceptions">
+<span id="turtle-trading-position-sizing-exceptions-module"></span><h2>turtle_trading.position_sizing.exceptions module<a class="headerlink" href="#module-turtle_trading.position_sizing.exceptions" title="Link to this heading">¶</a></h2>
+<p>risk management rules</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="turtle_trading.position_sizing.exceptions.CloselyCorrelatedMarketsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turtle_trading.position_sizing.exceptions.</span></span><span class="sig-name descname"><span class="pre">CloselyCorrelatedMarketsException</span></span><a class="headerlink" href="#turtle_trading.position_sizing.exceptions.CloselyCorrelatedMarketsException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Closely Correlated Markets - A maximum of 6 Units in one particular direction.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="turtle_trading.position_sizing.exceptions.LooselyCorrelatedMarketsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turtle_trading.position_sizing.exceptions.</span></span><span class="sig-name descname"><span class="pre">LooselyCorrelatedMarketsException</span></span><a class="headerlink" href="#turtle_trading.position_sizing.exceptions.LooselyCorrelatedMarketsException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Loosely Correlated Markets - A maximum of 10 Units in one particular direction.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="turtle_trading.position_sizing.exceptions.SingleDirectionException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turtle_trading.position_sizing.exceptions.</span></span><span class="sig-name descname"><span class="pre">SingleDirectionException</span></span><a class="headerlink" href="#turtle_trading.position_sizing.exceptions.SingleDirectionException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Single Direction - A maximum of 12 Units in one direction, long or short.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="turtle_trading.position_sizing.exceptions.SingleMarketsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turtle_trading.position_sizing.exceptions.</span></span><span class="sig-name descname"><span class="pre">SingleMarketsException</span></span><a class="headerlink" href="#turtle_trading.position_sizing.exceptions.SingleMarketsException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Single Markets - A maximum of 4 Units per market.</p>
+</dd></dl>
+
+</section>
+<section id="module-turtle_trading.position_sizing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turtle_trading.position_sizing" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">turtle-trading</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="turtle_trading.html">turtle_trading package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="turtle_trading.html">turtle_trading package</a><ul>
+      <li>Previous: <a href="turtle_trading.exits.html" title="previous chapter">turtle_trading.exits package</a></li>
+      <li>Next: <a href="turtle_trading.position_sizing.algorithms.html" title="next chapter">turtle_trading.position_sizing.algorithms package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Gabe Kutner.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/turtle_trading.position_sizing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

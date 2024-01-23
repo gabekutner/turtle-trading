@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>turtle_trading.entries package &#8212; turtle-trading 3.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=b576230a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="turtle_trading.exits package" href="turtle_trading.exits.html" />
+    <link rel="prev" title="turtle_trading package" href="turtle_trading.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="turtle-trading-entries-package">
+<h1>turtle_trading.entries package<a class="headerlink" href="#turtle-trading-entries-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-turtle_trading.entries.add_units">
+<span id="turtle-trading-entries-add-units-module"></span><h2>turtle_trading.entries.add_units module<a class="headerlink" href="#module-turtle_trading.entries.add_units" title="Link to this heading">¶</a></h2>
+<p>adding units</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="turtle_trading.entries.add_units.addunits">
+<span class="sig-prename descclassname"><span class="pre">turtle_trading.entries.add_units.</span></span><span class="sig-name descname"><span class="pre">addunits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig_breakout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orig_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_units</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turtle_trading.entries.add_units.addunits" title="Link to this definition">¶</a></dt>
+<dd><p>adding units to existing positions</p>
+</dd></dl>
+
+</section>
+<section id="module-turtle_trading.entries.last_breakout">
+<span id="turtle-trading-entries-last-breakout-module"></span><h2>turtle_trading.entries.last_breakout module<a class="headerlink" href="#module-turtle_trading.entries.last_breakout" title="Link to this heading">¶</a></h2>
+<p>last breakouts and profitability</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="turtle_trading.entries.last_breakout.get_last_breakout">
+<span class="sig-prename descclassname"><span class="pre">turtle_trading.entries.last_breakout.</span></span><span class="sig-name descname"><span class="pre">get_last_breakout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="turtle_trading.html#turtle_trading.dataframe_loader.DataFrameLoader" title="turtle_trading.dataframe_loader.DataFrameLoader"><span class="pre">DataFrameLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">date</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#turtle_trading.entries.last_breakout.get_last_breakout" title="Link to this definition">¶</a></dt>
+<dd><p>get the last breakout date and direction</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="turtle_trading.entries.last_breakout.get_last_breakout_profitability">
+<span class="sig-prename descclassname"><span class="pre">turtle_trading.entries.last_breakout.</span></span><span class="sig-name descname"><span class="pre">get_last_breakout_profitability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="turtle_trading.html#turtle_trading.dataframe_loader.DataFrameLoader" title="turtle_trading.dataframe_loader.DataFrameLoader"><span class="pre">DataFrameLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stand_devs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">breakout_tuple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">date</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#turtle_trading.entries.last_breakout.get_last_breakout_profitability" title="Link to this definition">¶</a></dt>
+<dd><p>get the last breakout profitability</p>
+</dd></dl>
+
+</section>
+<section id="module-turtle_trading.entries.system">
+<span id="turtle-trading-entries-system-module"></span><h2>turtle_trading.entries.system module<a class="headerlink" href="#module-turtle_trading.entries.system" title="Link to this heading">¶</a></h2>
+<p>entry systems - results come as booleans: True for a long breakout, False for a short breakout, None for no breakout</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="turtle_trading.entries.system.EntrySignal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">turtle_trading.entries.system.</span></span><span class="sig-name descname"><span class="pre">EntrySignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="turtle_trading.html#turtle_trading.dataframe_loader.DataFrameLoader" title="turtle_trading.dataframe_loader.DataFrameLoader"><span class="pre">DataFrameLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turtle_trading.entries.system.EntrySignal" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>this class represents an entry signal, true for a valid entry, false for invalid</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="turtle_trading.entries.system.EntrySignal.get_breakout_tuple">
+<span class="sig-name descname"><span class="pre">get_breakout_tuple</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#turtle_trading.entries.system.EntrySignal.get_breakout_tuple" title="Link to this definition">¶</a></dt>
+<dd><p>get breakout numbers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="turtle_trading.entries.system.EntrySignal.system_one">
+<span class="sig-name descname"><span class="pre">system_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">breakout_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turtle_trading.entries.system.EntrySignal.system_one" title="Link to this definition">¶</a></dt>
+<dd><p>use system one</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="turtle_trading.entries.system.EntrySignal.system_two">
+<span class="sig-name descname"><span class="pre">system_two</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">breakout_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#turtle_trading.entries.system.EntrySignal.system_two" title="Link to this definition">¶</a></dt>
+<dd><p>use system two</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="turtle_trading.entries.system.getentry">
+<span class="sig-prename descclassname"><span class="pre">turtle_trading.entries.system.</span></span><span class="sig-name descname"><span class="pre">getentry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="turtle_trading.html#turtle_trading.dataframe_loader.DataFrameLoader" title="turtle_trading.dataframe_loader.DataFrameLoader"><span class="pre">DataFrameLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#turtle_trading.entries.system.getentry" title="Link to this definition">¶</a></dt>
+<dd><p>shortcut function for class: EntrySignal</p>
+</dd></dl>
+
+</section>
+<section id="module-turtle_trading.entries">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-turtle_trading.entries" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">turtle-trading</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="turtle_trading.html">turtle_trading package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="turtle_trading.html">turtle_trading package</a><ul>
+      <li>Previous: <a href="turtle_trading.html" title="previous chapter">turtle_trading package</a></li>
+      <li>Next: <a href="turtle_trading.exits.html" title="next chapter">turtle_trading.exits package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Gabe Kutner.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/turtle_trading.entries.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

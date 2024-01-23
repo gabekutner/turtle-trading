@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 """ stop placement """
 from itertools import cycle
-from turtle_trading.config.exceptions import arg_equals
+from turtle_trading._config.exceptions import arg_equals
 
 
 def getstops(stop_system: str, unit_list: list[float], orig_n: float):

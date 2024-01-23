@@ -4,10 +4,10 @@
 import datetime
 from typing import Tuple, Optional
 
-from turtle_trading.config.breakout import getbreakouts, check_if_breakout
+from turtle_trading._config.breakout import getbreakouts, check_if_breakout
 from turtle_trading.position_sizing.algorithms.get_n import getn
 from turtle_trading.dataframe_loader import DataFrameLoader
-from turtle_trading.config.utils import reset_and_reverse
+from turtle_trading._config.utils import reset_and_reverse
 
 
 def get_last_breakout(dataframe: DataFrameLoader, days: int, skip: Optional[int] = 1) -> Tuple[datetime.date, bool]:

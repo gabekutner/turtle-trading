@@ -5,8 +5,8 @@ import datetime
 from typing import Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
-from turtle_trading.config.breakout import getbreakouts
-from turtle_trading.config.exceptions import arg_equals
+from turtle_trading._config.breakout import getbreakouts
+from turtle_trading._config.exceptions import arg_equals
 
 
 def getexit(dataframe: DataFrameLoader, system: int, pos_direction: bool, date: Optional[datetime.date] = None):

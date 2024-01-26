@@ -6,7 +6,7 @@ import datetime
 import pandas as pd
 from typing import Optional
 
-from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 from turtle_trading._config.utils import reset_and_reverse
 
 """ ignore Pandas Future Warning and SettingWithCopyWarnings """
@@ -14,7 +14,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 pd.set_option('mode.chained_assignment', None)
 
 
-def getn(dataframe: DataFrameLoader, date: Optional[datetime.date] = None):
+def getn(dataframe: dfl, date: Optional[datetime.date] = None):
   """A shortcut function for class: N.
   
   :param dataframe: A DataFrameLoader object.
@@ -32,9 +32,11 @@ class N:
   :param dataframe: A DataFrameLoader object.
   :param date: Optional, a datetime.date object.
   """
-  def __init__(self, dataframe: DataFrameLoader, date: Optional[datetime.date] = None):
+  def __init__(self, dataframe: dfl, date: Optional[datetime.date] = None):
     self.dataframe = dataframe
     self.date = date
+
+    self.type = dataframe.type
 
     # Private
     self._edit_dataframe() # converted to dataframe
@@ -68,10 +70,11 @@ class N:
       # Set the last 'previous_close' to 0, otherwise will raise NoneType error
       if isinstance(row[1]['previous_close'], type(None)):
         row[1]['previous_close'] = 0
-
+        
       maximum = max(
         row[1]['high'] - row[1]['low'], row[1]['high'] - row[1]['previous_close'], row[1]['previous_close'] - row[1]['low']
       ) 
+
       self.dataframe.iloc[index, self.dataframe.columns.get_loc('true_range')] = maximum
 
 
@@ -83,3 +86,9 @@ class N:
   def get_n(self) -> float:
     """ Calculate N. """
     return round(((19 * self.pdn + self.dataframe['true_range'][-1]) / 20), 4)
+  
+
+  def check_answer(self):
+    """ Prints to console proof of answer. """
+    # later ..
+    print(self.dataframe)

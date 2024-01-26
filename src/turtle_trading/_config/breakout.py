@@ -7,9 +7,10 @@ from typing import Tuple, Optional
 
 from turtle_trading.dataframe_loader import DataFrameLoader
 from turtle_trading._config.utils import is_market_open
+from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 
 
-def getbreakouts(dataframe: DataFrameLoader, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False) -> Tuple[float]:
+def getbreakouts(dataframe: dfl, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False) -> Tuple[float]:
   """ shortcut function for class: Breakout """
   dataframe.reset()
   return Breakout(dataframe, days, date, include_current_extrema).breakouts
@@ -17,6 +18,7 @@ def getbreakouts(dataframe: DataFrameLoader, days: int, date: Optional[datetime.
 
 def check_if_breakout(tuple: tuple[float]) -> bool:
   """ shortcut function for checking a breakout """
+  # tuple = [float(i) for i in tuple]
   if len(tuple) == 3:
     # market is open, using live price
     if tuple[2] >= tuple[0] or tuple[2] <= tuple[1]:
@@ -30,7 +32,7 @@ def check_if_breakout(tuple: tuple[float]) -> bool:
 
 class Breakout:
   """ this class represents finding breakout numbers """
-  def __init__(self, dataframe: DataFrameLoader, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False):
+  def __init__(self, dataframe: dfl, days: int, date: Optional[datetime.date] = None, include_current_extrema: Optional[bool] = False):
     self.dataframe_obj = dataframe
     self.dataframe = dataframe
     self.days = days

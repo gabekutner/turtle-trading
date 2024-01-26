@@ -5,10 +5,10 @@ import datetime
 from typing import Optional
 
 from turtle_trading.position_sizing.algorithms.get_n import getn
-from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 
 
-def getunits(dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
+def getunits(dataframe: dfl, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
   """A shortcut function for class: Unit.
   
   :param dataframe: A DataFrameLoader object.
@@ -30,7 +30,7 @@ class Unit:
   :param n: Optional, N.
   :param date: Optional, a datetime.date object.
   """
-  def __init__(self, dataframe: DataFrameLoader, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
+  def __init__(self, dataframe: dfl, account: float, n: Optional[float] = None, date: Optional[datetime.date] = None):
     self.dataframe = dataframe
     self.account = account
     self.n = n
@@ -45,7 +45,6 @@ class Unit:
     self.dollar_volatility_adjustment()
     self.unit = self.get_unit_size()
 
-
   def dollar_volatility_adjustment(self) -> float: 
     """ calculating the dollar volatility of the asset """
     if self.date:
@@ -56,7 +55,7 @@ class Unit:
 
     if not self.date:
       price = self.dataframe.live_price
-      self.dollar_volatility = self.n * price
+      self.dollar_volatility = self.n * float(price)
       return self.dollar_volatility
   
 

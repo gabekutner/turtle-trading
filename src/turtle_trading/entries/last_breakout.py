@@ -7,10 +7,12 @@ from typing import Tuple, Optional
 from turtle_trading._config.breakout import getbreakouts, check_if_breakout
 from turtle_trading.position_sizing.algorithms.get_n import getn
 from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
+
 from turtle_trading._config.utils import reset_and_reverse
 
 
-def get_last_breakout(dataframe: DataFrameLoader, days: int, skip: Optional[int] = 1) -> Tuple[datetime.date, bool]:
+def get_last_breakout(dataframe: dfl, days: int, skip: Optional[int] = 1) -> Tuple[datetime.date, bool]:
   """ get the last breakout date and direction """
   dataframe = reset_and_reverse(dataframe)
 
@@ -18,13 +20,14 @@ def get_last_breakout(dataframe: DataFrameLoader, days: int, skip: Optional[int]
 
     date = dataframe.dataframe.iloc[index].name.date()
     breakout_tuple = getbreakouts(dataframe, days, date, True)
+    breakout_tuple = [float(i) for i in breakout_tuple]
     
     if check_if_breakout(breakout_tuple) and index+1 > skip:
       # true if long breakout, false if short breakout
       return (date, index, True if breakout_tuple[2] >= breakout_tuple[0] else False)
       
     
-def get_last_breakout_profitability(dataframe: DataFrameLoader, stand_devs: float, breakout_tuple: Tuple[datetime.date, int, bool]) -> bool:
+def get_last_breakout_profitability(dataframe: dfl, stand_devs: float, breakout_tuple: Tuple[datetime.date, int, bool]) -> bool:
   """ get the last breakout profitability """
   dataframe = reset_and_reverse(dataframe)
 

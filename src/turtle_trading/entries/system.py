@@ -3,11 +3,12 @@
 """ entry systems - results come as booleans: True for a long breakout, False for a short breakout, None for no breakout  """
 from turtle_trading.entries.last_breakout import get_last_breakout, get_last_breakout_profitability
 from turtle_trading.dataframe_loader import DataFrameLoader
+from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 from turtle_trading._config.breakout import getbreakouts, check_if_breakout
 from turtle_trading._config.exceptions import arg_equals
 
 
-def getentry(dataframe: DataFrameLoader, system: int) -> bool:
+def getentry(dataframe: dfl, system: int) -> bool:
   """ shortcut function for class: EntrySignal """
   arg_equals("system", (1, 2))
   dataframe.reset()
@@ -17,11 +18,12 @@ def getentry(dataframe: DataFrameLoader, system: int) -> bool:
 
 class EntrySignal:
   """ this class represents an entry signal, true for a valid long entry, false for valid short entry, none for invalid. """
-  def __init__(self, dataframe: DataFrameLoader, system: int):
+  def __init__(self, dataframe: dfl, system: int):
     self.dataframe = dataframe
     self.days = 20 if system == 1 else 55
 
     breakout_tuple = self.get_breakout_tuple()
+    breakout_tuple = [float(i) for i in breakout_tuple]
     if self.days == 20:
       self.signal = self.system_one(breakout_tuple)
     elif self.days == 55:

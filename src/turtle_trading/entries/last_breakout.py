@@ -6,7 +6,6 @@ from typing import Tuple, Optional
 
 from turtle_trading._config.breakout import getbreakouts, check_if_breakout
 from turtle_trading.position_sizing.algorithms.get_n import getn
-from turtle_trading.dataframe_loader import DataFrameLoader
 from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 
 from turtle_trading._config.utils import reset_and_reverse

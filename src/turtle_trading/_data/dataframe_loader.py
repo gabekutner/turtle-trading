@@ -3,6 +3,7 @@
 """ initialize a dataframe """
 import warnings
 import datetime
+import pandas as pd
 
 from yahoo_fin.stock_info import get_data, get_live_price
 from turtle_trading._data.futures_query import FuturesData, futures_url_keymap
@@ -17,8 +18,9 @@ class DataFrameLoader:
   :param ticker: A ticker symbol.
   :param type: Optional, stock or futures.
   """
-  def __init__(self, ticker: str):
+  def __init__(self, ticker: str, ext: pd.DataFrame = None):
     self.ticker = ticker.upper()
+    self.ext = ext
 
     if ticker.lower() in list(futures_url_keymap[0].keys()):
       self.type = "futures"
@@ -33,6 +35,10 @@ class DataFrameLoader:
     if type is not None:
       self.futures_loader = FuturesData(self.ticker)
       dataframe = self.futures_loader.get_futures_data()
+
+    if self.ext is not None:
+      return self.ext
+
     else: 
       dataframe = get_data(self.ticker, interval='1d')
     return dataframe

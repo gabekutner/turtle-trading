@@ -2,7 +2,6 @@
 # -*- coding: utf8 -*-
 """ entry systems - results come as booleans: True for a long breakout, False for a short breakout, None for no breakout  """
 from turtle_trading.entries.last_breakout import get_last_breakout, get_last_breakout_profitability
-from turtle_trading.dataframe_loader import DataFrameLoader
 from turtle_trading._data.dataframe_loader import DataFrameLoader as dfl
 from turtle_trading._config.breakout import getbreakouts, check_if_breakout
 from turtle_trading._config.exceptions import arg_equals
